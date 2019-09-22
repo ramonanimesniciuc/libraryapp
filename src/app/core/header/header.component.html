@@ -1,0 +1,19 @@
+<div class="header">
+  <div class="col-md-9">
+    <div class="search ">
+      <input type="text" class="searchTerm" placeholder="What are you looking for?">
+      <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <a  *ngIf="cookieService.get('userLogged')" href="#/login" class="button logout-a" >
+      <img src="https://pbs.twimg.com/profile_images/378800000639740507/fc0aaad744734cd1dbc8aeb3d51f8729_400x400.jpeg">
+      <div class="logout">LOGOUT</div>
+    </a>
+  </div>
+
+<!--  <a ><i class="fas fa-sign-out-alt"></i>Logout</a>-->
+</div>
+

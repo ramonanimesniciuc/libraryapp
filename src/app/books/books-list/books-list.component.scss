@@ -1,0 +1,90 @@
+.container {
+
+}
+.container-books{
+  //display: flex;
+  //flex-direction: row;
+  //flex-wrap: wrap;
+}
+app-book-card{
+  cursor: pointer;
+}
+.fa {
+  margin-right: 20px;
+  font-size: 30px;
+  color: gray;
+  float: right;
+}
+/******************************************
+Book stuff
+*******************************************/
+
+/**********************************
+display change
+***********************************/
+/*book height smaller, cover opacity, move text onto cover and star too
+animate it */
+#list-th:target .book {
+  height: 100px;
+  width: 300px;
+  padding: 10px;
+  margin: 25px auto 25px auto;
+}
+
+#list-th:target .cover {
+  width: 300px;
+}
+
+#list-th:target img {
+  opacity: .1;
+}
+
+#list-th:target p {
+  margin-top: -62px;
+  margin-left: 20px;
+}
+/* remove button? */
+#large-th:target .book {
+  height: 400px
+}
+#large-th{
+  margin-bottom: 0;
+
+}
+/***********************************
+star animation
+***********************************/
+/***********************************
+zoom on click
+***********************************/
+.bookCard:hover {
+  -webkit-animation:bump 0.35s  linear; /*for Google*/
+  -moz-animation:bump 0.35s  linear;/*for Firefox*/
+  cursor: pointer;
+}
+
+@-webkit-keyframes bump{/*for Google*/
+  0% {-webkit-transform:scale(1.2,1.2); opacity: 0.7;}
+  50% {-webkit-transform:scale(0.9,0.9); opacity: 0.9;}
+  100% {-webkit-transform:scale(1,1); opacity: 1;}
+}
+
+@-moz-keyframes bump{/*for Firefox*/
+  0% {-moz-transform:scale(1.2,1.2); opacity: 0.7;}
+  50% {-moz-transform:scale(0.9,0.9); opacity: 0.9;}
+  100% {-moz-transform:scale(1,1); opacity: 1;}
+}
+.select-location{
+  width: 280px;
+  padding-top: 20px;
+  margin-left: 2%;
+  .fa-map-marker-alt{
+    padding: 2px;
+  }
+  .mat-select-value{
+    color: #188694;
+  }
+  .mat-form-field-infix{
+    font-size: 22px;
+  }
+}

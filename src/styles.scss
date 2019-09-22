@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css?family=Hepta+Slab&display=swap');
+@import '~bootstrap/dist/css/bootstrap.min.css';
+a{
+  font-family: Poppins-Regular;
+  src: url('./app/login/login/fonts/poppins/Poppins-Regular.ttf');
+}
+p,h1,h2,h3,h4,h5,h6{
+  font-family: Poppins-Regular;
+  src: url('./app/login/login/fonts/poppins/Poppins-Regular.ttf');
+}
+body{
+  font-family: Poppins-Regular;
+  src: url('./app/login/login/fonts/poppins/Poppins-Regular.ttf');
+}
+
+.lo-container{
+  margin-bottom: 0;
+}
+table{
+  font-family: 'Hepta Slab', serif;
+  font-weight: bold;
+  thead{
+    th{
+      font-size: 28px;
+    }
+
+  }
+}
+.mat-form-field-appearance-legacy .mat-form-field-infix{
+  font-size: 22px;
+}

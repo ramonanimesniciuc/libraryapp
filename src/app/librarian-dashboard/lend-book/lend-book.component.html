@@ -1,0 +1,32 @@
+<div class="lend-book-form">
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Select user</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let user of users" [value]="user.id">
+          {{user.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="span-col">or</span><a class="create-user-account-a" href="#/create-user-account">Create user account</a>
+  </div>
+  <div class="row">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [(ngModel)]="selectedBook">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let book of possibleBooks" [value]="book.title">
+          <img class="example-option-img" aria-hidden [src]="book.cover" height="25">
+          <span>{{book.title}}</span> |
+          <small>Author: {{book.author}}</small>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Choose start date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>

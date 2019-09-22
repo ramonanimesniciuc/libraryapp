@@ -1,0 +1,15 @@
+<div class="book-div">
+
+  <h4>Book your favorite book now:</h4>
+  <mat-form-field>
+    <mat-label>Time:</mat-label>
+    <mat-select [(ngModel)]="selectedTime">
+      <mat-option *ngFor="let option of timeOptions" [value]="option">
+        {{option.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="row price ">You will have to pay : {{selectedTime.price}} in order to book this book.</div>
+  <div class="row text-sm-center">(Your card will be debited for this action)</div>
+</div>
+<button mat-button class="col-md-12 buttonBook">Book now</button>
