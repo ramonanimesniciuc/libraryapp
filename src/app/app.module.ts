@@ -16,6 +16,7 @@ import {RentModule} from './rent/rent.module';
 import {LoginModule} from './login/login.module';
 import {UserModule} from './user/user.module';
 import {LibrarianDashboardModule} from './librarian-dashboard/librarian-dashboard.module';
+import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
@@ -24,6 +25,7 @@ import {LibrarianDashboardModule} from './librarian-dashboard/librarian-dashboar
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
     BooksModule,

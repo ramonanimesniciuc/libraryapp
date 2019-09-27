@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../login/auth.service';
+import {BooksService} from '../books.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-books-list',
@@ -10,10 +13,16 @@ export class BooksListComponent implements OnInit {
   private books: any[];
   private locations: any;
   constructor(private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private bookService: BooksService,
+              private cookieService: CookieService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    this.locations=[{id: 1, value: 'Bucuresti Timpuri Noi'}];
+    this.authService.handleAuthCallback();
+    console.log(this.cookieService.get('userLogged'));
+    this.getBooks();
+    this.getLibraries();
     // tslint:disable-next-line:max-line-length
     this.books = [{id: 1, title: 'A love story', author: 'A.S.Princke', status: 'available', cover: 'https://images-na.ssl-images-amazon.com/images/I/51Jwl5TIcuL._SX308_BO1,204,203,200_.jpg'},
       {id: 2, title: 'One Day', author: 'Henry Smith', status: 'rented', cover: 'https://images4.penguinrandomhouse.com/cover/9780307946713'},
@@ -27,6 +36,22 @@ export class BooksListComponent implements OnInit {
 
   goToBookVirew(bookId: any) {
     this.router.navigate(['./' + bookId], {relativeTo: this.route});
+  }
+
+  getBooks() {
+    this.bookService.getBooks().subscribe(
+      (books) => {
+        console.log(books);
+      }
+    );
+  }
+
+  getLibraries() {
+    this.bookService.getLibraries().subscribe(
+      (libraries) => {
+        this.locations = libraries;
+      }
+    );
   }
 
 }

@@ -1,0 +1,22 @@
+form{
+  padding: 20px;
+  text-align: center;
+  margin-left: 5%;
+  .form-title{
+    color:#8a2303;
+    letter-spacing: 5px;
+  }
+  button{
+    font-size: 18px;
+    width: 200px;
+    color:white;
+    letter-spacing: 5px;
+    padding: 10px;
+    font-weight: bold;
+    background: linear-gradient(#188694, #535353, #74a3ca);
+  }
+  button:hover{
+    background: linear-gradient(#c96550, #535353, #dea475);
+  }
+
+}

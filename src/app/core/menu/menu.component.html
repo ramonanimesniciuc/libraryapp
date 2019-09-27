@@ -18,6 +18,9 @@
       <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
         <a href="#/books" mat-menu-item class="btn"><i class="fas fa-bell"></i>Check rents</a>
       </div>
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
+        <a href="#/books" mat-menu-item class="btn"><i class="fas fa-plus-circle"></i>Add book</a>
+      </div>
       <div class="menu-item" *ngIf="cookieService.get('userLogged')==='userDemo'">
         <a href="#/my-profile"  mat-menu-item class="btn"><i class="fas fa-user-edit"></i>My profile</a>
       </div>

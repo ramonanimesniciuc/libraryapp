@@ -1,0 +1,56 @@
+<form [formGroup]="addForm">
+  <h1 class="form-title">ADD BOOK</h1>
+<div class="row">
+  <div class="col-md-2">
+    <mat-form-field class="example-full-width">
+    <input matInput placeholder="Book's title">
+    </mat-form-field>
+  </div>
+  <div class=" col-md-2">
+    <mat-form-field class="example-full-width">
+      <mat-select placeholder="Choose author">
+        <mat-option *ngFor="let author of authors" [value]="author.id">
+          {{author.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <div class=" col-md-2">
+    <mat-form-field class="example-full-width">
+      <mat-select placeholder="Choose category">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{category.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class=" col-md-2">
+    <mat-form-field class="example-full-width">
+ <input type="number" matInput placeholder="Insert number of pages">
+    </mat-form-field>
+  </div>
+  <div class=" col-md-2">
+    <mat-form-field class="example-full-width">
+      <input type="number" matInput placeholder="Insert Rating">
+    </mat-form-field>
+  </div>
+</div>
+  <div class="row">
+    <div class="col-md-2">
+      <mat-form-field>
+        <input type="number" matInput placeholder="Stock">
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="Choose publish house">
+          <mat-option *ngFor="let house of publishHouses" [value]="house.id">
+            {{house.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-button type="button">ADD BOOK</button>
+</form>
