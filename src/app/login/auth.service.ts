@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
-// import * as config from '../../../auth_config.json';
 import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 import { tap, catchError, concatMap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -16,7 +15,8 @@ export class AuthService {
     createAuth0Client({
       domain: 'hidden-wildflower-3887.auth0.com',
       client_id: '08KWAzBmdyjHEJSjarZPQmrJoYJjJ0BC',
-      redirect_uri: 'http://localhost:4200/books'
+      redirect_uri: `${window.location.origin}/redirect`,
+      audience: 'https://library-api.theheracles.tech/api/'
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1), // Every subscription receives the same shared value
@@ -40,15 +40,22 @@ export class AuthService {
   loggedIn: boolean = null;
 
   constructor(private router: Router,
-              private cookieService: CookieService) {
-  }
+              private cookieService: CookieService) { }
 
   // When calling, options can be passed if desired
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
-  getUser$(options?): any {
+  getUser$(options?): Observable<any> {
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getUser(options))),
       tap(user => this.userProfileSubject$.next(user))
+    );
+  }
+
+  // When calling, options can be passed if desired
+  // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#gettokensilently
+  getTokenSilently$(options?): Observable<string> {
+    return this.auth0Client$.pipe(
+      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
     );
   }
 
@@ -58,7 +65,6 @@ export class AuthService {
     const checkAuth$ = this.isAuthenticated$.pipe(
       concatMap((loggedIn: boolean) => {
         if (loggedIn) {
-          console.log(this.getUser$());
           // If authenticated, get user and set in app
           // NOTE: you could pass options here if needed
           return this.getUser$();
@@ -74,14 +80,13 @@ export class AuthService {
     });
   }
 
-  login(redirectPath: string = '/') {
+  login(redirectPath: string = '/books') {
     // A desired redirect path can be passed to login method
     // (e.g., from a route guard)
     // Ensure Auth0 client instance exists
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log in
       client.loginWithRedirect({
-        redirect_uri: 'http://localhost:4200/books',
         appState: { target: redirectPath }
       });
     });
@@ -92,23 +97,12 @@ export class AuthService {
     // Call when app reloads after user logs in with Auth0
     let targetRoute: string; // Path to redirect to after login processsed
     const authComplete$ = this.handleRedirectCallback$.pipe(
-      // Have client, now call method to handle auth callback redirect
       tap(cbRes => {
-        this.userProfile$.pipe().subscribe(
-          (user) => {
-            if(user){
-              this.cookieService.set('userLogged','librarianDemo');
-              localStorage.setItem('userLogged','librarianDemo');
-            }
-          }
-        );
         // Get and set target redirect route from callback results
-        // targetRoute = cbRes.appState && cbRes.appState.target ? cbRes.appState.target : '/';
-        targetRoute = '/books';
+        targetRoute = cbRes.appState && cbRes.appState.target ? cbRes.appState.target : '/books';
       }),
       concatMap(() => {
         // Redirect callback complete; get user and login status
-        console.log('heeeeeeee');
         return combineLatest(
           this.getUser$(),
           this.isAuthenticated$
@@ -116,27 +110,29 @@ export class AuthService {
       })
     );
     // Subscribe to authentication completion observable
-    // Response will be an array of user and login status
+    // Response will be an array of user, token, and login status
     authComplete$.subscribe(([user, loggedIn]) => {
       // Redirect to target route after callback processing
+      this.cookieService.set('userLogged','librarianDemo');
       this.router.navigate([targetRoute]);
     });
   }
-
+  checkIfUserIsLogged(){
+    if(this.cookieService.get('userLogged')){
+      return true;
+    }else{
+      return false;
+    }
+  }
   logout() {
     // Ensure Auth0 client instance exists
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log out
       client.logout({
         client_id: '08KWAzBmdyjHEJSjarZPQmrJoYJjJ0BC',
-        returnTo: 'http://localhost:4200/login'
+        returnTo: window.location.origin + '/login'
       });
     });
-  }
-  getTokenSilently$(options?): Observable<string> {
-    return this.auth0Client$.pipe(
-      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
-    );
   }
 
 }

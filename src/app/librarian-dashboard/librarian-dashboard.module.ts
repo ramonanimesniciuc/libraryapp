@@ -6,10 +6,12 @@ import {BooksModule} from '../books/books.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddBookComponent } from './add-book/add-book.component';
 import {MatButtonModule} from '@angular/material';
+import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
+import { CheckRentsComponent } from './check-rents/check-rents.component';
 
 
 @NgModule({
-  declarations: [LendBookComponent, ReceiveBookBackComponent, AddBookComponent],
+  declarations: [LendBookComponent, ReceiveBookBackComponent, AddBookComponent, CreateUserAccountComponent, CheckRentsComponent],
   imports: [
     CommonModule,
     BooksModule,

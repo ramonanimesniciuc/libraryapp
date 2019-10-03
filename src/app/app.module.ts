@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import {CoreModule} from './core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {BooksListComponent} from './books/books-list/books-list.component';
@@ -26,6 +27,7 @@ import {HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
+    SimpleNotificationsModule.forRoot(),
     BrowserAnimationsModule,
     FontAwesomeModule,
     BooksModule,

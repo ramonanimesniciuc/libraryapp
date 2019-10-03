@@ -1,5 +1,7 @@
 <div class="lend-book-form">
+  <h1 class="renting-title">RENT A BOOK TO A USER</h1>
   <div class="row">
+    <h1>1.</h1>
     <mat-form-field>
       <mat-label>Select user</mat-label>
       <mat-select>
@@ -8,11 +10,12 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <span class="span-col">or</span><a class="create-user-account-a" href="#/create-user-account">Create user account</a>
+    <span class="span-col-or">or</span><a class="create-user-account-a" href="#/create-user-account">Create user account</a>
   </div>
-  <div class="row">
+  <div class="row" >
+    <h1>2.</h1>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [(ngModel)]="selectedBook">
+      <input matInput placeholder="Book" aria-label="Book" [matAutocomplete]="auto" [(ngModel)]="selectedBook">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let book of possibleBooks" [value]="book.title">
           <img class="example-option-img" aria-hidden [src]="book.cover" height="25">
@@ -23,10 +26,20 @@
     </mat-form-field>
   </div>
   <div class="row">
+    <h1>3.</h1>
     <mat-form-field>
       <input matInput [matDatepicker]="picker" placeholder="Choose start date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
+  <div class="row">
+    <h1>4.</h1>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker2" placeholder="Choose end date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <button mat-button class="btn">Rent book </button>
 </div>

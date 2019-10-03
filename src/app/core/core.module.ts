@@ -7,11 +7,12 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {MatMenuModule} from '@angular/material';
 import {CookieService} from 'ngx-cookie-service';
+import { RedirectComponent } from './redirect/redirect.component';
 
 
 
 @NgModule({
-  declarations: [MenuComponent, HeaderComponent, FooterComponent],
+  declarations: [MenuComponent, HeaderComponent, FooterComponent, RedirectComponent],
   providers:[CookieService],
   exports: [
     MenuComponent,

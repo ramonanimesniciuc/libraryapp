@@ -9,18 +9,13 @@ import {AuthService} from '../../login/auth.service';
 })
 export class HeaderComponent implements OnInit {
   private avatar: any;
+  private profileJson: any;
   constructor(private cookieService: CookieService,
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.userProfile$.pipe().subscribe(
-      (user) => {
-        console.log(user);
-        this.avatar = user ? user.picture : '';
-        if(user){
-          this.cookieService.set('userLogged',user);
-        }
-      }
+    this.authService.userProfile$.subscribe(
+      profile => this.profileJson = JSON.stringify(profile, null, 2)
     );
 
   }

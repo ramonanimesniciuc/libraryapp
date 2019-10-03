@@ -25,6 +25,7 @@
     "@fortawesome/angular-fontawesome": "^0.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "angular2-notifications": "^2.0.0",
     "auth0-js": "^9.11.3",
     "bootstrap": "^4.3.1",
     "font-awesome": "^4.7.0",

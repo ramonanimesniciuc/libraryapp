@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.cookieService.delete('userLogged');
+    this.cookieService.delete('userToken');
   }
   loginUser() {
 //     if (this.username === 'user' && this.password === 'user') {
