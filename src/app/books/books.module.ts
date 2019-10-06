@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ReserveBookComponent } from './reserve-book/reserve-book.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {CoreModule} from '../core/core.module';
 
 @NgModule({
   declarations: [BooksListComponent, RentBookComponent, BookCardComponent, BookViewComponent, ReserveBookComponent],
@@ -18,6 +19,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatDatepickerModule,
     MatAutocompleteModule,
     FormsModule,
+    CoreModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatNativeDateModule,

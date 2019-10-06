@@ -8,6 +8,7 @@ import { AddBookComponent } from './add-book/add-book.component';
 import {MatButtonModule} from '@angular/material';
 import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
 import { CheckRentsComponent } from './check-rents/check-rents.component';
+import {RentModule} from '../rent/rent.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { CheckRentsComponent } from './check-rents/check-rents.component';
     CommonModule,
     BooksModule,
     FormsModule,
+    RentModule,
     ReactiveFormsModule,
     MatButtonModule
   ]

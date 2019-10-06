@@ -41,7 +41,7 @@ export class BooksListComponent implements OnInit {
     //   }
     // );
     // this.getBooks();
-    // this.getLibraries();
+    this.getLibraries();
     // tslint:disable-next-line:max-line-length
     this.pingBookList();
     this.books = [{id: 1, title: 'A love story', author: 'A.S.Princke', status: 'available', cover: 'https://images-na.ssl-images-amazon.com/images/I/51Jwl5TIcuL._SX308_BO1,204,203,200_.jpg'},
@@ -86,12 +86,12 @@ export class BooksListComponent implements OnInit {
   // }
 
   //
-  // getLibraries() {
-  //   this.bookService.getLibraries().subscribe(
-  //     (libraries) => {
-  //       this.locations = libraries;
-  //     }
-  //   );
-  // }
+  getLibraries() {
+    this.bookService.getLibraries$().subscribe(
+      (libraries) => {
+        this.locations = libraries;
+      }
+    );
+  }
 
 }

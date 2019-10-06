@@ -1,0 +1,19 @@
+mat-form-field{
+  padding: 15px;
+  width: 250px;
+}
+button{
+  font-size: 18px;
+  width: 350px;
+  color:white;
+  letter-spacing: 5px;
+  padding: 10px;
+  font-weight: bold;
+  background: linear-gradient(#188694, #535353, #74a3ca);
+}
+button:hover{
+  background: linear-gradient(#c96550, #535353, #dea475);
+}
+.card-number-field{
+  width: 300px;
+}

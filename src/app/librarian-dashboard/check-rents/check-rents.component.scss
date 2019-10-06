@@ -1,0 +1,28 @@
+.table-rents{
+  .mat-elevation-z8{
+    padding: 20px;
+    margin-left: 10%;
+    width: 80%;
+    .mat-table thead{
+      background: #1cbaca;
+    }
+    th{
+      text-align: center;
+      background: #00B4CC;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+  .rented-books-table{
+    padding-top: 15px;
+  }
+.fa-envelope-square{
+  font-size: 22px;
+}
+  .fa-envelope-square:hover{
+    cursor: pointer;
+    font-size: 22px;
+    background: #00B4CC;
+    color: #c96550;
+  }
+}

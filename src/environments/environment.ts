@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  api_url:'https://library-api.theheracles.tech/api/',
   auth: {
     clientID: '08KWAzBmdyjHEJSjarZPQmrJoYJjJ0BC',
     domain: 'hidden-wildflower-3887.auth0.com', // e.g., you.auth0.com

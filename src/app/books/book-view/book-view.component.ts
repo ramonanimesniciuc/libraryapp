@@ -4,6 +4,8 @@ import {BooksService} from '../books.service';
 import {MatDialog} from '@angular/material';
 import {RentBookComponent} from '../rent-book/rent-book.component';
 import {ReserveBookComponent} from '../reserve-book/reserve-book.component';
+import { NotificationsService } from 'angular2-notifications';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-book-view',
@@ -15,6 +17,8 @@ export class BookViewComponent implements OnInit {
   private bookId: any;
   constructor(private route: ActivatedRoute,
               private bookService: BooksService,
+              private cookieService: CookieService,
+              private notification : NotificationsService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -34,10 +38,19 @@ export class BookViewComponent implements OnInit {
        publish_year: 2009,
        pages: 230,
         stock: 10};
+        this.getBook();
   }
 
   getBook() {
-
+this.bookService.getBookById$(this.bookId).subscribe(
+  (book)=>{
+    this.book=book;
+  },
+  (error)=>{
+    console.log(error);
+this.notification.error(error.message);
+  }
+);
   }
 
   rentBook(bookId: any) {
