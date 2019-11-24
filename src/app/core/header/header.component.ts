@@ -14,10 +14,6 @@ export class HeaderComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.userProfile$.subscribe(
-      profile => this.profileJson = JSON.stringify(profile, null, 2)
-    );
-
   }
 
 }

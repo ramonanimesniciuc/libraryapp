@@ -21,10 +21,19 @@ export class LoginComponent implements OnInit {
   }
   loginUser() {
 //     if (this.username === 'user' && this.password === 'user') {
-// this.cookieService.set('userLogged', 'librarianDemo');
+// this.cookieService.set('userLogged', 'userDemo');
 // this.router.navigate(['/books']);
 //     }
-    this.authService.login();
+    this.authService.login({username:this.username,password:this.password}).subscribe(
+      (user)=>{
+        this.cookieService.set('userLogged','userDemo');
+        this.router.navigate(['/books']);
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+//     this.authService.login();
   }
 
 }

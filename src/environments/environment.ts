@@ -4,16 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url:'https://library-api.theheracles.tech/api/',
-  auth: {
-    clientID: '08KWAzBmdyjHEJSjarZPQmrJoYJjJ0BC',
-    domain: 'hidden-wildflower-3887.auth0.com', // e.g., you.auth0.com
-    auth0RedirectUri: 'http://localhost:4200/#/books', // URL to return to after auth0 login
-    auth0ReturnTo: 'http://localhost:4200/#/login', // URL to return to after auth0 logout
-    scope: 'openid profile',
-    type: 'token id_token',
-    audience: 'https://hidden-wildflower-3887.auth0.com/api/v2/'
-  }
+  api_url: 'http://localhost:3030/',
 };
 
 /*

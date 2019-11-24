@@ -15,7 +15,6 @@ export class HttpService {
   constructor(
     protected http: HttpClient,
     protected cookieService: CookieService,
-    protected authService: AuthService,
   ) {
     const headerJson = {
       'LabAuth': '',
@@ -27,7 +26,6 @@ export class HttpService {
   }
 
   get(url: string, getHeader?: boolean, getTemplate?: boolean, options?: any): any {
-    this.headers = this.headers.set('Authorization','Bearer' +  this.cookieService.get('userToken'));
     !!options ? options.headers = this.headers : options = {headers: this.headers};
     if (getHeader) {
       options.observe = 'response';
@@ -45,7 +43,6 @@ export class HttpService {
   }
 
   post(url: string, data?: any, getHeader?: boolean, download?: boolean, args?: any): Observable<any> {
-    this.headers = this.headers.set('Authorization','Bearer' +  this.cookieService.get('userToken'));
     args = (args == null) ? {} : args;
     if (getHeader) {
       args.observe = 'response';
@@ -66,7 +63,6 @@ export class HttpService {
   }
 
   put(url: string, data?: any, args?: any): Observable<any> {
-    this.headers = this.headers.set('Authorization','Bearer' +  this.cookieService.get('userToken'));
     args = (args == null) ? {} : args;
     args.headers = (args.headers === undefined) ? this.headers : args.headers;
     return this.http.put(environment.api_url.concat(url), JSON.stringify(data), args).pipe(
@@ -88,7 +84,6 @@ export class HttpService {
   }
 
   patch(url: string, getHeader?: boolean, getTemplate?: boolean, options?: any): Observable<any> {
-    this.headers = this.headers.set('Authorization','Bearer' +  this.cookieService.get('userToken'));
     !!options ? options.headers = this.headers : options = {headers: this.headers};
     if (getHeader) {
       options.observe = 'response';

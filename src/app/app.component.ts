@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
-    this.auth.localAuthSetup();
+
   }
 }

@@ -42,7 +42,7 @@ export class BookViewComponent implements OnInit {
   }
 
   getBook() {
-this.bookService.getBookById$(this.bookId).subscribe(
+this.bookService.getBookById(this.bookId).subscribe(
   (book)=>{
     this.book=book;
   },

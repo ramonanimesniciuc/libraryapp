@@ -11,7 +11,6 @@ export class RedirectComponent implements OnInit {
   constructor(public authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.handleAuthCallback();
   }
 
 }

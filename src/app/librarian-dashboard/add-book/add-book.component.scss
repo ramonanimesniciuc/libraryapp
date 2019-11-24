@@ -1,11 +1,13 @@
+.form-title{
+  color:#8a2303;
+  letter-spacing: 5px;
+  padding: 10px;
+}
 form{
   padding: 20px;
   //text-align: center;
   //margin-left: 5%;
-  .form-title{
-    color:#8a2303;
-    letter-spacing: 5px;
-  }
+
   button{
     font-size: 18px;
     width: 200px;
@@ -20,6 +22,19 @@ form{
   }
 
 }
-.add-form{
-  //margin-left: 15%;
+//.add-form{
+// display: grid;
+//  grid-template-columns: 20% 20% 20% 20% 20%;
+//  grid-template-rows: 50% 50%;
+//  .row{
+//    justify-self: center;
+//    display: grid;
+//    grid-template-columns: 20% 20% 20% 20% 20%;
+//  }
+//}
+.mat-form-field-appearance-legacy .mat-form-field-infix{
+  width: 250px;
+}
+.mat-form-field{
+  width: 100%;
 }

@@ -10,9 +10,10 @@ import { ReserveBookComponent } from './reserve-book/reserve-book.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CoreModule} from '../core/core.module';
+import { DeleteBookComponent } from './delete-book/delete-book.component';
 
 @NgModule({
-  declarations: [BooksListComponent, RentBookComponent, BookCardComponent, BookViewComponent, ReserveBookComponent],
+  declarations: [BooksListComponent, RentBookComponent, BookCardComponent, BookViewComponent, ReserveBookComponent, DeleteBookComponent],
   imports: [
     MatSelectModule,
     CommonModule,

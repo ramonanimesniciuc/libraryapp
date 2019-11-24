@@ -70,7 +70,7 @@ export class BooksListComponent implements OnInit {
       stock: 10,
       title: 'How to cook in style'
     };
-    this.bookService.postBook$(book).subscribe(
+    this.bookService.postBook(book).subscribe(
       res => {this.response = JSON.stringify(res, null, 2).trim();
               console.log(this.response);
       }
@@ -87,7 +87,7 @@ export class BooksListComponent implements OnInit {
 
   //
   getLibraries() {
-    this.bookService.getLibraries$().subscribe(
+    this.bookService.getLibraries().subscribe(
       (libraries) => {
         this.locations = libraries;
       }

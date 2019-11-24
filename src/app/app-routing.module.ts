@@ -9,12 +9,12 @@ import {MemberComponent} from './user/member/member.component';
 import {AuthGuard} from './core/guards/auth.guard';
 import {RentBookComponent} from './books/rent-book/rent-book.component';
 import {LendBookComponent} from './librarian-dashboard/lend-book/lend-book.component';
-import {InterceptorService} from './core/interceptor.service';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AddBookComponent} from './librarian-dashboard/add-book/add-book.component';
 import {RedirectComponent} from './core/redirect/redirect.component';
 import {CreateUserAccountComponent} from './librarian-dashboard/create-user-account/create-user-account.component';
 import {CheckRentsComponent} from './librarian-dashboard/check-rents/check-rents.component';
+import {DeleteBookComponent} from './books/delete-book/delete-book.component';
+import {ContactComponent} from './user/contact/contact.component';
 
 
 
@@ -29,17 +29,15 @@ const routes: Routes = [
   {path: 'add-book', component: AddBookComponent},
   {path: 'check-rents', component: CheckRentsComponent},
   {path: 'create-user-account', component: CreateUserAccountComponent},
+  {path: 'delete-book', component: DeleteBookComponent},
   {path: 'my-profile', component: MemberComponent, canActivate: [AuthGuard]},
   {path: 'rent-book', component: LendBookComponent, canActivate: [AuthGuard]},
+  {path: 'contact', component: ContactComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard,    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptorService,
-    multi: true
-  } ]
+  providers: [AuthGuard ]
 })
 export class AppRoutingModule { }

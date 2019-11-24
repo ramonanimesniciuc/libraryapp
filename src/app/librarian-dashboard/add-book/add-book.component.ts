@@ -37,7 +37,7 @@ export class AddBookComponent implements OnInit {
   }
 
   addNewBook() {
-    this.bookService.postBook$(this.addForm.value).subscribe(
+    this.bookService.postBook(this.addForm.value).subscribe(
       (succes) => {
         this.addForm.reset();
         this.notifications.success('Book added successfully!');
