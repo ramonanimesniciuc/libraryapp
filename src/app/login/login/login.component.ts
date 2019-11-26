@@ -11,6 +11,7 @@ import {AuthService} from '../auth.service';
 export class LoginComponent implements OnInit {
   private username: any;
   private password: any;
+  private loginLibrarian:boolean;
   constructor(private cookieService: CookieService,
               private authService: AuthService,
               private router: Router) { }
@@ -36,4 +37,18 @@ export class LoginComponent implements OnInit {
 //     this.authService.login();
   }
 
+  showloginLibrarian(){
+    this.loginLibrarian=!this.loginLibrarian;
+  }
+  loginAsLibrarian(){
+this.authService.loginLibrarian({username:this.username,password:this.password}).subscribe(
+  (librarian)=>{
+    this.cookieService.set('userLogged','librarianDemo');
+    this.router.navigate(['/books']);
+  },
+  (error)=>{
+    console.log(error);
+  }
+)
+  }
 }

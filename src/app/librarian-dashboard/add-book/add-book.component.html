@@ -23,7 +23,7 @@
     <mat-form-field class="example-full-width">
       <mat-select placeholder="Choose category">
         <mat-option *ngFor="let category of categories" [value]="category.id">
-          {{category.name}}
+          {{category.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -55,5 +55,16 @@
       </mat-form-field>
     </div>
   </div>
-  <button mat-button type="button" (click)="addNewBook()">ADD BOOK</button>
+  <button mat-button type="button" class="add-book-copy pull-left col-12" (click)="addBookCopies()">ADD BOOK COPIES</button>
+  <br>
+  <div class="row justify-content-center" *ngFor="let copy of bookCopies">
+  <div class="col-12">
+    <mat-select>
+      <mat-option *ngFor="let library of libraries" [(ngModel)]="copy.library">
+        {{library.name}}
+      </mat-option>
+    </mat-select>
+    </div>
+  </div>
+  <button mat-button type="button" class="add-book pull-right" (click)="addNewBook()">ADD BOOK</button>
 </form>

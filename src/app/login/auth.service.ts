@@ -19,6 +19,9 @@ export class AuthService {
   login(user:any){
   return this.http.post('login',user);
   }
+  loginLibrarian(librarian:any){
+    return this.http.post('login-librarian',librarian);
+  }
   logout() {
 
   }

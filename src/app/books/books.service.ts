@@ -15,16 +15,28 @@ export class BooksService {
 
 
   getBookById(bookId: any){
-    return this.http.get('/public/books/byId/' + '5f987d27-c7ae-4a59-b14b-5f80a49d4ce7');
+    return this.http.get('books/' + bookId);
   }
   getLibraries(){
-    return this.http.get('public/libraries/all');
+    return this.http.get('libraries');
   }
 
   getBooks(){
-    return this.http.get('public/books/all');
+    return this.http.get('books');
   }
   postBook(book:any){
-    return this.http.post('private/books',book);
+    return this.http.post('books',book);
+  }
+
+  getAuthors(){
+    return this.http.get('authors');
+  }
+
+  getPublishHouses(){
+    return this.http.get('publishingHouses');
+  }
+
+  getCategories(){
+    return this.http.get('categories');
   }
 }

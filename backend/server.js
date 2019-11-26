@@ -10,7 +10,7 @@ const sequelize = new Sequelize('libraryapp', 'root', '', {
     timestamps:false
   }
 })
-sequelize.sync();
+sequelize.sync({force:true});
 // COMANDA PENTRU CREAREA UNEI BAZE DE DATE CU NUMELE "ANDREILICENTA"
 // var con=mysql.createConnection({
 //    host:"localhost",
@@ -183,8 +183,8 @@ const ReservedBooks=sequelize.define('reservedBooks',{
   }
 })
 
-Libraries.hasMany(Books);
-Books.belongsTo(Libraries);
+Libraries.hasMany(BookCopies);
+BookCopies.belongsTo(Libraries);
 
 Categories.hasMany(Books);
 Books.belongsTo(Categories);
@@ -229,6 +229,78 @@ app.post('/login',(req,res,next)=>{
     }
   })
     .then((user)=>res.status(200).json(user))
+    .catch((err)=>next(err))
+})
+
+app.post('/login-librarian',(req,res,next)=>{
+  librarians.findAll({
+    where: {
+      username: req.body.username,
+      password: req.body.password
+    }
+  })
+    .then((librarian)=>res.status(200).json(librarian))
+    .catch((err)=>next(err))
+})
+app.get('/books',(req,res,next)=>{
+  Books.findAll({
+    include:[
+      {
+        model:Authors,
+      },
+      {
+        model:PublishingHouses
+      },
+      {
+        model:Categories
+      }
+    ]
+    }
+  )
+    .then((books)=>res.status(200).json(books))
+    .catch((err)=>next(err))
+})
+
+app.get('/books/:id',(req,res,next)=>{
+  Books.findByPk(
+    req.params.id,{
+      include:[{
+        model:Categories
+      },
+        {
+          model:PublishingHouses
+        },
+        {
+          model:BookCopies
+        }
+      ]
+    }
+  )
+    .then((book)=>res.status(200).json(book))
+    .catch((err)=>next(err))
+})
+
+app.get('/libraries',(req,res,next)=>{
+  Libraries.findAll()
+    .then((libraries)=>res.status(200).json(libraries))
+    .catch((err)=>next(err))
+})
+
+app.get('/authors',(req,res,next)=>{
+  Authors.findAll()
+    .then((authors)=>res.status(200).json(authors))
+    .catch((err)=>next(err))
+})
+
+app.get('/categories',(req,res,next)=>{
+  Categories.findAll()
+    .then((categories)=>res.status(200).json(categories))
+    .catch((err)=>next(err))
+})
+
+app.get('/publishingHouses',(req,res,next)=>{
+  PublishingHouses.findAll()
+    .then((houses)=>res.status(200).json(houses))
     .catch((err)=>next(err))
 })
 app.listen('3030',()=>{

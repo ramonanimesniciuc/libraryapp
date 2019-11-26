@@ -14,15 +14,18 @@ export class AddBookComponent implements OnInit {
  private authors: any[];
  private categories: any[];
  private publishHouses: any[];
+ private libraries:any[];
+ private bookCopies:any[];
   constructor(private formBuilder: FormBuilder,
               private notifications: NotificationsService,
               private cookieService: CookieService,
               private bookService: BooksService) { }
 
   ngOnInit() {
-    this.publishHouses = [{id: 1, name: 'Humanitas'}];
-    this.categories = [{id: 1, name: 'Drama'}];
-    this.authors = [{id: 1, name: 'Agatha Christie'}];
+    this.publishHouses = [];
+    this.categories = [];
+    this.bookCopies=[];
+    this.authors = [];
     this.addForm = this.formBuilder.group({
       author: new FormControl(''),
       cover: new FormControl(''),
@@ -34,6 +37,11 @@ export class AddBookComponent implements OnInit {
       stock: new FormControl(1),
       rating: new FormControl(3.4)
     });
+
+    this.getAuthors();
+    this.getCategories();
+    this.getPublishingHouses();
+    this.getLibraries();
   }
 
   addNewBook() {
@@ -48,4 +56,53 @@ export class AddBookComponent implements OnInit {
     );
   }
 
+  getPublishingHouses(){
+this.bookService.getPublishHouses().subscribe(
+  (publishingHouses)=>{
+    this.publishHouses=publishingHouses;
+  },
+  (error)=>{
+    console.log(error);
+  }
+)
+  }
+
+  addBookCopies(){
+  const newCopy={
+    library:'',
+    status:'',
+    comment:''
+  }
+  this.bookCopies.push(newCopy);
+  }
+
+
+  getAuthors(){
+this.bookService.getAuthors().subscribe(
+  (authors)=>{
+    this.authors=authors;
+  },
+  (error)=>{
+    console.log(error);
+  }
+)
+  }
+
+  getLibraries(){
+    this.bookService.getLibraries().subscribe(
+      (libraries)=>{
+        this.libraries=libraries;
+      }
+    )
+  }
+ getCategories(){
+this.bookService.getCategories().subscribe(
+  (categories)=>{
+    this.categories=categories;
+  },
+  (error)=>{
+    console.log(error);
+  }
+)
+ }
 }

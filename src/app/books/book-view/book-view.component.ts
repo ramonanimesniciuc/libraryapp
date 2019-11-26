@@ -22,22 +22,23 @@ export class BookViewComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.book={};
     this.route.params.subscribe(
       (params) => {
         this.bookId = params.bookId;
       }
     );
-    this.book = {id: this.bookId,
-      cover: 'https://images-na.ssl-images-amazon.com/images/I/810f%2BZy0ITL.jpg',
-      title: 'Love you first',
-      author: 'Arthur Smith',
-      category: 'Drama',
-      rating: 3.5,
-      condition: 'Cover intact,few pages missing.',
-       published_by: 'Humanitas',
-       publish_year: 2009,
-       pages: 230,
-        stock: 10};
+    // this.book = {id: this.bookId,
+    //   cover: 'https://images-na.ssl-images-amazon.com/images/I/810f%2BZy0ITL.jpg',
+    //   title: 'Love you first',
+    //   author: 'Arthur Smith',
+    //   category: 'Drama',
+    //   rating: 3.5,
+    //   condition: 'Cover intact,few pages missing.',
+    //    published_by: 'Humanitas',
+    //    publish_year: 2009,
+    //    pages: 230,
+    //     stock: 10};
         this.getBook();
   }
 
