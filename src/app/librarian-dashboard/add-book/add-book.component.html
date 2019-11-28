@@ -6,12 +6,12 @@
 <div class="row justify-content-center">
   <div class="col-3 col-sm-4">
     <mat-form-field class="example-full-width">
-    <input matInput placeholder="Book's title">
+    <input matInput placeholder="Book's title" formControlName="title">
     </mat-form-field>
   </div>
   <div class=" col-2 col-sm-4">
     <mat-form-field class="example-full-width">
-      <mat-select placeholder="Choose author">
+      <mat-select placeholder="Choose author" formControlName="AuthorId">
         <mat-option *ngFor="let author of authors" [value]="author.id">
           {{author.name}}
         </mat-option>
@@ -21,33 +21,48 @@
   </div>
   <div class=" col-2 col-sm-4">
     <mat-form-field class="example-full-width">
-      <mat-select placeholder="Choose category">
+      <mat-select placeholder="Choose category" formControlName="categoryId">
         <mat-option *ngFor="let category of categories" [value]="category.id">
           {{category.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div class=" col-2 col-sm-6">
+  <div class=" col-1 col-sm-3">
     <mat-form-field class="example-full-width">
- <input type="number" matInput placeholder="Insert number of pages">
+ <input type="number" matInput placeholder="Insert number of pages" formControlName="pages">
     </mat-form-field>
   </div>
-  <div class=" col-2 col-sm-6">
-    <mat-form-field class="example-full-width">
-      <input type="number" matInput placeholder="Insert Rating">
+  <div class="col-2 col-sm-3">
+    <mat-form-field>
+      <input matInput formControlName="publishedDate" [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
-</div>
+  <div class=" col-1 col-sm-3">
+    <mat-form-field class="example-full-width">
+      <input type="number" matInput placeholder="Insert Rating" formControlName="rating">
+    </mat-form-field>
+  </div>
+  <div class="col-1 col-sm-3">
+    <label class="image-upload-container btn btn-bwm">
+
+      <input #imageInput
+             type="file"
+             accept="image/*"
+             (change)="changeListener($event)">
+    </label>
+  </div>
   <div class="row justify-content-center">
     <div class="col-3 col-sm-6">
       <mat-form-field>
-        <input type="number" matInput placeholder="Stock">
+        <input type="number" matInput placeholder="Stock" formControlName="stock">
       </mat-form-field>
     </div>
     <div class="col-4 col-sm-6">
       <mat-form-field class="example-full-width">
-        <mat-select placeholder="Choose publish house">
+        <mat-select placeholder="Choose publish house" formControlName="PublishingHouseId">
           <mat-option *ngFor="let house of publishHouses" [value]="house.id">
             {{house.name}}
           </mat-option>
@@ -55,16 +70,40 @@
       </mat-form-field>
     </div>
   </div>
-  <button mat-button type="button" class="add-book-copy pull-left col-12" (click)="addBookCopies()">ADD BOOK COPIES</button>
-  <br>
-  <div class="row justify-content-center" *ngFor="let copy of bookCopies">
-  <div class="col-12">
-    <mat-select>
-      <mat-option *ngFor="let library of libraries" [(ngModel)]="copy.library">
-        {{library.name}}
-      </mat-option>
-    </mat-select>
+</div>
+  <div class="row justify-content-center">
+    <div class="image-preview mb-3" *ngIf="previewUrl">
+      <img [src]="previewUrl" height="300" />
+    </div>
+
+    <div class="mb-3" *ngIf="uploadedFilePath">
+      {{uploadedFilePath}}
     </div>
   </div>
-  <button mat-button type="button" class="add-book pull-right" (click)="addNewBook()">ADD BOOK</button>
+  <button mat-button type="button" style="width: 100%" class="add-book-copy  col-12" (click)="addBookCopies()">ADD BOOK COPIES</button>
+  <br>
+  <div *ngIf="bookCopies.length>=1">
+    <div class="row bookCopies justify-content-center"  *ngFor="let copy of bookCopies;let i = index">
+      <p class="pull-left pCopy">Copy # {{i + 1}}</p>
+      <div class="col-2 ">
+        <mat-select placeholder="Choose location" [(value)]="copy.LibraryId">
+          <mat-option *ngFor="let library of libraries" [value]="library.id">
+            {{library.name}}
+          </mat-option>
+        </mat-select>
+      </div>
+      <div class="col-2 ">
+        <mat-select placeholder="Choose status" [(value)]="copy.bookStatusId">
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{status.title}}
+          </mat-option>
+        </mat-select>
+      </div>
+      <div class="col-3 ">
+      <input [(ngModel)]="copy.comment" placeholder="Insert comment" class="form-control"  [ngModelOptions]="{standalone: true}">
+      </div>
+    </div>
+  </div>
+
+  <button mat-button type="button" class="add-book pull-right" (click)="addNewBook()" disabled="!addForm.valid">ADD BOOK</button>
 </form>

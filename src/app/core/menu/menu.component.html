@@ -9,28 +9,28 @@
   <div class="menu-item">
     <a href="/books" mat-menu-item class="btn"><i class="fas fa-glasses"></i>Home</a>
   </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
       <a href="/rent-book" mat-menu-item class="btn"><i class="fas fa-book"></i>Rent book</a>
     </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
         <a href="/create-user-account" mat-menu-item class="btn"><i class="fas fa-users-cog"></i>Create new user account</a>
       </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
         <a href="/check-rents" mat-menu-item class="btn"><i class="fas fa-bell"></i>Check rents</a>
       </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
         <a href="/add-book" mat-menu-item class="btn"><i class="fas fa-plus-circle"></i>Add book</a>
       </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarianDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
         <a href="/delete-book" mat-menu-item class="btn"><i class="fas fa-eraser"></i>Book out</a>
       </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='userDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='user'">
         <a href="/my-profile"  mat-menu-item class="btn"><i class="fas fa-user-edit"></i>My profile</a>
       </div>
-      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='userDemo'">
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='user'">
         <a href="/rentedBooks"  mat-menu-item class="btn"><i class="fas fa-book"></i>History</a>
       </div>
-      <div *ngIf="cookieService.get('userLogged')==='userDemo'" class="menu-item" ><a href="/contact" mat-menu-item class="btn"><i class="fab fa-hire-a-helper"></i>Contact</a></div>
+      <div *ngIf="cookieService.get('userLogged')==='user'" class="menu-item" ><a href="/contact" mat-menu-item class="btn"><i class="fab fa-hire-a-helper"></i>Contact</a></div>
     </mat-sidenav>
   </mat-sidenav-container>
 </ng-container>

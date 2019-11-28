@@ -9,6 +9,6 @@ export class LibrarianService {
   constructor(private http: HttpService) { }
 
   createNewAccount(newUser: any) {
-return this.http.post('', newUser);
+return this.http.post('users', newUser);
   }
 }

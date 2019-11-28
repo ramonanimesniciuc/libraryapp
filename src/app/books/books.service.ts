@@ -10,33 +10,44 @@ import { HttpService } from '../core/http-service';
 export class BooksService {
   private headers: HttpHeaders;
   constructor(private http: HttpService,
-              private authService: AuthService ,) {
+              private authService: AuthService , ) {
   }
 
 
-  getBookById(bookId: any){
+  getBookById(bookId: any) {
     return this.http.get('books/' + bookId);
   }
-  getLibraries(){
+  getLibraries() {
     return this.http.get('libraries');
   }
 
-  getBooks(){
+  getBooks() {
     return this.http.get('books');
   }
-  postBook(book:any){
-    return this.http.post('books',book);
+  postBook(book: any) {
+    return this.http.post('books', book);
   }
 
-  getAuthors(){
+  getAuthors() {
     return this.http.get('authors');
   }
 
-  getPublishHouses(){
+  getPublishHouses() {
     return this.http.get('publishingHouses');
   }
 
-  getCategories(){
+  getCategories() {
     return this.http.get('categories');
+  }
+  getStatuses() {
+    return this.http.get('bookStatuses');
+  }
+
+  postBookCopies(bookCopy: any[]) {
+    return this.http.post('bookCopies', bookCopy);
+  }
+
+  filterBooksByLibrary(libraryId: any) {
+    return this.http.get('booksByLibrary/' + libraryId);
   }
 }

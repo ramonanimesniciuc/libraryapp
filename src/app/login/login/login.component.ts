@@ -11,7 +11,7 @@ import {AuthService} from '../auth.service';
 export class LoginComponent implements OnInit {
   private username: any;
   private password: any;
-  private loginLibrarian:boolean;
+  private loginLibrarian: boolean;
   constructor(private cookieService: CookieService,
               private authService: AuthService,
               private router: Router) { }
@@ -25,30 +25,30 @@ export class LoginComponent implements OnInit {
 // this.cookieService.set('userLogged', 'userDemo');
 // this.router.navigate(['/books']);
 //     }
-    this.authService.login({username:this.username,password:this.password}).subscribe(
-      (user)=>{
-        this.cookieService.set('userLogged','userDemo');
+    this.authService.login({username: this.username, password: this.password}).subscribe(
+      (user) => {
+        this.cookieService.set('userLogged', 'user', 60);
         this.router.navigate(['/books']);
       },
-      (error)=>{
+      (error) => {
         console.log(error);
       }
     );
 //     this.authService.login();
   }
 
-  showloginLibrarian(){
-    this.loginLibrarian=!this.loginLibrarian;
+  showloginLibrarian() {
+    this.loginLibrarian = !this.loginLibrarian;
   }
-  loginAsLibrarian(){
-this.authService.loginLibrarian({username:this.username,password:this.password}).subscribe(
-  (librarian)=>{
-    this.cookieService.set('userLogged','librarianDemo');
+  loginAsLibrarian() {
+this.authService.loginLibrarian({username: this.username, password: this.password}).subscribe(
+  (librarian) => {
+    this.cookieService.set('userLogged', 'librarian', 60);
     this.router.navigate(['/books']);
   },
-  (error)=>{
+  (error) => {
     console.log(error);
   }
-)
+);
   }
 }

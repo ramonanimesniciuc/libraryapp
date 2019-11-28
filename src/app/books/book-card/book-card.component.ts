@@ -11,6 +11,7 @@ export class BookCardComponent implements OnInit {
   @Input('cover')cover: any;
   @Input('review')review: any;
   @Input('status')status: any;
+  @Input('rating')rating:any;
   constructor() { }
 
   ngOnInit() {

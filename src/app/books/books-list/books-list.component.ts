@@ -37,6 +37,11 @@ export class BooksListComponent implements OnInit {
     this.getLibraries();
   }
 
+  changeBookFilter($event) {
+    // $event.value=1
+   this.filterBooksByLibrary($event.value);
+  }
+
   goToBookVirew(bookId: any) {
     this.router.navigate(['./' + bookId], {relativeTo: this.route});
   }
@@ -59,12 +64,27 @@ export class BooksListComponent implements OnInit {
       }
     );
   }
-
+  filterBooksByLibrary(libraryId: any) {
+  this.bookService.filterBooksByLibrary(libraryId).subscribe(
+    (books) => {
+      const copies=books;
+      // copies.forEach((copy)=>{
+      //   delete copy.comment;
+      //   delete copy.id;
+      //   delete copy.bookStatusId;
+      // });
+      // console.log(Array.from(new Set(copies)));
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  }
   getBooks() {
     this.bookService.getBooks().subscribe(
       (books) => {
-       this.books=books;
-        console.log(this.books);
+       this.books = books;
+       console.log(this.books);
       }
     );
   }

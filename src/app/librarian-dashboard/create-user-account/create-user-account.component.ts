@@ -17,9 +17,13 @@ export class CreateUserAccountComponent implements OnInit {
   ngOnInit() {
     this.group = this.formBuilder.group({
       email: new FormControl('', Validators.email),
-      name: new FormControl('', Validators.required),
+      first_name: new FormControl('', Validators.required),
+      last_name: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      card_number: new FormControl('', Validators.pattern(new RegExp(('\\b\\d{4}\\s\\d{4}\\s\\d{4}\\s\\d{4}\\b'))))
+      address: new FormControl('', Validators.required),
+      birthdate: new FormControl(new Date()),
+      enrollment_date: new FormControl(new Date()),
+      username: new FormControl('')
     });
   }
   createAccount() {
