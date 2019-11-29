@@ -1,8 +1,11 @@
+
+
 const express=require('express');
 const bodyParser=require('body-parser')
 const Sequelize = require('sequelize')
 const mysql=require('mysql2');
 const cors = require('cors');
+const Op = Sequelize.Op;
 const sequelize = new Sequelize('libraryapp', 'root', '', {
   dialect : 'mysql',
   operatorsAliases: false,
@@ -30,7 +33,7 @@ const sequelize = new Sequelize('libraryapp', 'root', '', {
 
 const app=express()
 app.use(cors());
-app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.json({limit:'100mb'}));
 
 
 const User =sequelize.define('User',{
@@ -165,6 +168,9 @@ const RentedBooks=sequelize.define('rentedBook',{
   },
   endDate:{
     type:Sequelize.DATEONLY
+  },
+  bookCopyId:{
+    type:Sequelize.INTEGER
   }
 })
 
@@ -216,6 +222,9 @@ ReservedBooks.belongsTo(User);
 BookCopies.hasMany(ReservedBooks);
 ReservedBooks.belongsTo(BookCopies);
 
+BookCopies.hasMany(RentedBooks);
+RentedBooks.belongsTo(BookCopies);
+
 ReservedTypes.hasMany(ReservedBooks);
 ReservedBooks.belongsTo(ReservedTypes);
 
@@ -261,6 +270,12 @@ app.get('/books',(req,res,next)=>{
     .catch((err)=>next(err))
 });
 
+
+app.get('/reservedTypes',(req,res,next)=>{
+  ReservedTypes.findAll()
+    .then((types)=>res.status(200).json(types))
+    .catch((err)=>next(err))
+});
 app.post('/bookCopies',(req,res,next)=>{
   const copies=req.body;
   console.log(req.body);
@@ -307,6 +322,32 @@ app.get('/books/:id',(req,res,next)=>{
 
 app.get('/booksByLibrary/:id',(req,res,next)=>{
   BookCopies.findAll({where:{LibraryId:req.params.id},include:[{model:Books}]})
+    .then((books)=>{
+      console.log(books);
+      let officialBooks=[];
+      books.forEach((b)=>{
+        Books.findByPk(b.bookId,{include:[{
+          model:Categories
+        },
+          {
+            model:PublishingHouses
+          },
+          {
+            model:BookCopies
+          }
+        ]}).then((boook)=>{
+          console.log(boook);
+          officialBooks.push(boook);
+          // res.status(200).json(officialBooks);
+        })
+      });
+      setTimeout(()=>{res.status(200).json(officialBooks)},3000);
+    })
+    .catch((err)=>next(err))
+});
+
+app.get('/copies/:id',(req,res,next)=>{
+  BookCopies.findAll({where:{bookId:req.params.id, [Op.or]: [{bookStatus: 1}, {bookStatusId: 2}]},include:[{model:Libraries}]})
     .then((books)=>res.status(200).json(books))
     .catch((err)=>next(err))
 });
@@ -339,6 +380,28 @@ app.get('/bookStatuses',(req,res,next)=>{
   BookStatuses.findAll()
     .then((statuses)=>res.status(200).json(statuses))
     .catch((err)=>next(err))
+});
+
+app.post('/bookit',(req,res,next)=>{
+  ReservedBooks.create(req.body)
+    .then((success)=>{
+      BookCopies.update({bookStatusId:3},{where:{id:req.body.bookCopyId}})
+        .then((success)=>res.status(201).send('Your copy is booked'))
+    })
+    .catch((err)=>{
+      next(err);
+    })
+});
+
+app.post('/rents',(req,res,next)=>{
+  RentedBooks.create(req.body)
+    .then((success)=>{
+      BookCopies.update({bookStatusId:4},{where:{id:req.body.bookCopyId}})
+        .then((success)=>res.status(201).send('Your copy is rented!'))
+    })
+    .catch((err)=>{
+      next(err);
+    })
 });
 app.listen('3030',()=>{
   console.log('Server started on port 3030');

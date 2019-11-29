@@ -50,4 +50,20 @@ export class BooksService {
   filterBooksByLibrary(libraryId: any) {
     return this.http.get('booksByLibrary/' + libraryId);
   }
+
+  getReservedTypes(){
+    return this.http.get('reservedTypes');
+  }
+
+  getCopies(bookId:any){
+    return this.http.get('copies/' + bookId);
+  }
+
+  bookABook(book:any){
+    return this.http.post('bookit',book);
+  }
+
+  rentABook(book:any){
+    return this.http.post('rents',book);
+  }
 }

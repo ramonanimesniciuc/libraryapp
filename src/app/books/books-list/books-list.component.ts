@@ -67,13 +67,7 @@ export class BooksListComponent implements OnInit {
   filterBooksByLibrary(libraryId: any) {
   this.bookService.filterBooksByLibrary(libraryId).subscribe(
     (books) => {
-      const copies=books;
-      // copies.forEach((copy)=>{
-      //   delete copy.comment;
-      //   delete copy.id;
-      //   delete copy.bookStatusId;
-      // });
-      // console.log(Array.from(new Set(copies)));
+      this.books=books;
     },
     (error) => {
       console.log(error);

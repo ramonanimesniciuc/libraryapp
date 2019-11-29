@@ -1,14 +1,14 @@
 <div class="rent-book-div">
   <mat-form-field class="col-md-6">
-    <input matInput [matDatepicker]="picker" placeholder="Choose a start date">
+    <input matInput [matDatepicker]="picker" [value]="startDate" placeholder="Choose a start date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <mat-form-field class="col-md-6">
-    <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+    <input matInput [matDatepicker]="picker2" [value]="endDate" placeholder="Choose an end date">
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
-  <button mat-button class="col-md-12"><i class="fas fa-bookmark"></i>Rent book</button>
+  <button mat-button class="col-md-12" (click)="rentBook()"><i class="fas fa-bookmark"></i>Rent book</button>
 </div>
 

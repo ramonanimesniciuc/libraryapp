@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
     this.authService.login({username: this.username, password: this.password}).subscribe(
       (user) => {
         this.cookieService.set('userLogged', 'user', 60);
+        this.cookieService.set('userDetails',user[0].id);
+        console.log(user);
         this.router.navigate(['/books']);
       },
       (error) => {

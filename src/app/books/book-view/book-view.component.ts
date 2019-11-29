@@ -15,14 +15,15 @@ import { CookieService } from 'ngx-cookie-service';
 export class BookViewComponent implements OnInit {
   private book: any;
   private bookId: any;
+  private copies: any[];
   constructor(private route: ActivatedRoute,
               private bookService: BooksService,
               private cookieService: CookieService,
-              private notification : NotificationsService,
+              private notification: NotificationsService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.book={};
+    this.book = {};
     this.route.params.subscribe(
       (params) => {
         this.bookId = params.bookId;
@@ -39,17 +40,18 @@ export class BookViewComponent implements OnInit {
     //    publish_year: 2009,
     //    pages: 230,
     //     stock: 10};
-        this.getBook();
+    this.getBook();
   }
 
   getBook() {
 this.bookService.getBookById(this.bookId).subscribe(
-  (book)=>{
-    this.book=book;
+  (book) => {
+    this.book = book;
+    this.getBookCopies();
   },
-  (error)=>{
+  (error) => {
     console.log(error);
-this.notification.error(error.message);
+    this.notification.error(error.message);
   }
 );
   }
@@ -57,7 +59,7 @@ this.notification.error(error.message);
   rentBook(bookId: any) {
     const dialogRef = this.dialog.open(RentBookComponent, {
       width: '700px',
-      data: {bookId}
+      data: {bookId:bookId}
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -67,11 +69,22 @@ this.notification.error(error.message);
   bookABook(bookId: any) {
     const dialogRef = this.dialog.open(ReserveBookComponent, {
       width: '700px',
-      data: {bookId}
+      data: {bookId: this.bookId, copies: this.copies}
     });
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  getBookCopies() {
+    this.bookService.getCopies(this.bookId).subscribe(
+      (copies) => {
+this.copies = copies;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
 }
