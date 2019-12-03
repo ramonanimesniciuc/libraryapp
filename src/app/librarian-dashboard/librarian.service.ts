@@ -11,4 +11,16 @@ export class LibrarianService {
   createNewAccount(newUser: any) {
 return this.http.post('users', newUser);
   }
+
+  getRents(libraryId: any) {
+    return this.http.get('rents/' + libraryId);
+  }
+
+  getRentsByUsers(libraryId: any) {
+    return this.http.get('rentsbyusers/' + libraryId);
+  }
+
+  returnBook(bookId: any, copyId: any) {
+    return this.http.post('/returnBook', {bookId, copyId});
+  }
 }

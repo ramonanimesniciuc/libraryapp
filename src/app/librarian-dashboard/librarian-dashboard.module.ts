@@ -9,10 +9,11 @@ import {MatButtonModule} from '@angular/material';
 import { CreateUserAccountComponent } from './create-user-account/create-user-account.component';
 import { CheckRentsComponent } from './check-rents/check-rents.component';
 import {RentModule} from '../rent/rent.module';
+import { ConfirmReturnComponent } from './confirm-return/confirm-return.component';
 
 
 @NgModule({
-  declarations: [LendBookComponent, ReceiveBookBackComponent, AddBookComponent, CreateUserAccountComponent, CheckRentsComponent],
+  declarations: [LendBookComponent, ReceiveBookBackComponent, AddBookComponent, CreateUserAccountComponent, CheckRentsComponent, ConfirmReturnComponent],
   imports: [
     CommonModule,
     BooksModule,
@@ -20,6 +21,7 @@ import {RentModule} from '../rent/rent.module';
     RentModule,
     ReactiveFormsModule,
     MatButtonModule
-  ]
+  ],
+  entryComponents:[ConfirmReturnComponent]
 })
 export class LibrarianDashboardModule { }

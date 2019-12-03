@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.cookieService.delete('userLogged');
-    this.cookieService.delete('userToken');
+    // this.cookieService.delete('userLogged');
+    // this.cookieService.delete('userToken');
   }
   loginUser() {
 //     if (this.username === 'user' && this.password === 'user') {
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
 //     }
     this.authService.login({username: this.username, password: this.password}).subscribe(
       (user) => {
-        this.cookieService.set('userLogged', 'user', 60);
-        this.cookieService.set('userDetails',user[0].id);
+        this.cookieService.set('userLogged', 'user', 5);
+        this.cookieService.set('userDetails', user[0].id);
         console.log(user);
         this.router.navigate(['/books']);
       },
@@ -45,7 +45,9 @@ export class LoginComponent implements OnInit {
   loginAsLibrarian() {
 this.authService.loginLibrarian({username: this.username, password: this.password}).subscribe(
   (librarian) => {
-    this.cookieService.set('userLogged', 'librarian', 60);
+    this.cookieService.set('userLogged', 'librarian', 5);
+    console.log(librarian);
+    this.cookieService.set('libraryId', librarian[0].LibraryId);
     this.router.navigate(['/books']);
   },
   (error) => {

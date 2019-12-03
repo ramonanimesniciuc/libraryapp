@@ -13,6 +13,8 @@ export class RentBookComponent implements OnInit {
   private startDate: any;
   private endDate: any;
   private selectedCopy: any;
+  private copies: any[];
+  private hasNotifications:any;
   constructor(private booksService: BooksService,
               @Inject(MAT_DIALOG_DATA) public data: any ,
               private cookieService: CookieService,
@@ -20,14 +22,17 @@ export class RentBookComponent implements OnInit {
               public dialogRef: MatDialogRef<RentBookComponent>, ) { }
 
   ngOnInit() {
+    this.selectedCopy = this.data.bookId;
+    this.hasNotifications = this.data.hasNotifications;
+    this.getCopies();
   }
 rentBook() {
     const rent = {
-      startDate: '',
-      endDate: '',
+      startDate: this.startDate,
+      endDate: this.endDate,
       UserId: this.cookieService.get('userDetails'),
-      LibrarianId: '1',
-      copyBoodId: this.selectedCopy
+      LibrarianId: '2',
+      bookCopyId: this.selectedCopy
     };
     this.booksService.rentABook(rent).subscribe(
       (success) => {
@@ -38,4 +43,25 @@ rentBook() {
       }
     );
 }
+
+  onCopySelected($event, index) {
+    this.selectedCopy = $event;
+    // document.getElementsByClassName('divCopies')[index].style.backgroundColor="#b3ffff";
+  }
+
+getCopies() {
+    this.booksService.getCopies(this.data.bookId).subscribe(
+      (copies) => {
+        this.copies = copies;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+}
+
+notifyUser(){
+
+}
+
 }

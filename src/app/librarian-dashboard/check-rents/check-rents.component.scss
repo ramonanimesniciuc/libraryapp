@@ -13,6 +13,20 @@
       font-weight: bold;
     }
   }
+  .mat-elevation-z9{
+    padding: 20px;
+    margin-left: 10%;
+    width: 80%;
+    .mat-table thead{
+      background: #99f2fa;
+    }
+    th{
+      text-align: center;
+      background: #cb901e;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
   .rented-books-table{
     padding-top: 15px;
   }
@@ -30,4 +44,19 @@
 .check-list-title{
   letter-spacing: 5px;
   padding: 10px;
+}
+
+.no-rented-books{
+  letter-spacing: 3px;
+  color:darkgreen;
+}
+
+.returnBook{
+  cursor: pointer;
+}
+
+.returnBook:hover{
+  color:darkgreen;
+  font-weight: bold;
+  background: lightgoldenrodyellow;
 }

@@ -1,15 +1,26 @@
 <div class="book-div">
 
-  <h4>Book your favorite book now:</h4>
-  <mat-form-field class="col-12">
-    <mat-label>Time:</mat-label>
+  <h4 *ngIf="copies.length>0" >Book your favorite book now:</h4>
+  <mat-form-field *ngIf="copies.length>0" class="col-12">
+    <mat-label >Time:</mat-label>
     <mat-select [(ngModel)]="selectedTime">
       <mat-option *ngFor="let option of timeOptions" [value]="option">
         {{option.title}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="col-12">
+  <div class="col-md-12" *ngIf="copies.length===0 && !this.hasNotification">
+    <h4 class="col-md-12 notification">There are no books available for booking!
+      Click the notification button if you want to be notified when the book is back!
+    </h4>
+    <button mat-button type="button" class="btn btn-primary col-md-12 notificationBtn" (click)="notifyUser()">Notify me</button>
+  </div>
+  <div class="col-md-12" *ngIf="copies.length===0 && this.hasNotification">
+    <h4 class="col-md-12 notification-active">You have a notification active for this book!
+      We'll notify you once it's back!!
+    </h4>
+  </div>
+  <mat-form-field class="col-12" *ngIf="copies.length>0">
     <mat-label>Select the location in which we have a copy:</mat-label>
     <mat-select [(ngModel)]="selectedCopy">
       <mat-option *ngFor="let copy of copies" [value]="copy">
@@ -17,7 +28,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <div class="row price ">You will have to pay : {{selectedTime.cost}} RON in order to book this book.</div>
-  <div class="row text-sm-center">(Your card will be debited for this action)</div>
+  <div class="row price " *ngIf="copies.length>0">You will have to pay : {{selectedTime.cost}} RON in order to book this book.</div>
+  <div class="row text-sm-center" *ngIf="copies.length>0">(Your card will be debited for this action)</div>
 </div>
-<button mat-button class="col-md-12 buttonBook" (click)="bookThisBook()">Book now</button>
+<button mat-button class="col-md-12 buttonBook" *ngIf="copies.length>0" (click)="bookThisBook()">Book now</button>

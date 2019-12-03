@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {BooksService} from '../books.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CookieService} from 'ngx-cookie-service';
-import {NotificationsService} from "angular2-notifications";
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-reserve-book',
@@ -15,6 +15,7 @@ export class ReserveBookComponent implements OnInit {
   private selectedCopy: any;
   private copies: any[];
   private bookId: any;
+  private hasNotification: any;
   constructor(private booksService: BooksService,
               @Inject(MAT_DIALOG_DATA) public data: any ,
               private cookieService: CookieService,
@@ -27,6 +28,7 @@ export class ReserveBookComponent implements OnInit {
     this.getReservedTypes();
     this.copies = this.data.copies;
     this.bookId = this.data.bookId;
+    this.hasNotification = this.data.hasNotifications;
   }
 
   getReservedTypes() {
@@ -39,7 +41,17 @@ export class ReserveBookComponent implements OnInit {
       }
     );
   }
-
+  notifyUser() {
+    this.booksService.addNotification({UserId: this.cookieService.get('userDetails'), bookId: this.bookId}).subscribe(
+      (success) => {
+        this.notifications.success('Notification added!');
+        this.dialogRef.close();
+      },
+      (err) => {
+        this.notifications.error(err.message);
+      }
+    );
+  }
   bookThisBook() {
     const booked = {
       payment_accepted: true,

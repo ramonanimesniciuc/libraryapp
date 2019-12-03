@@ -16,6 +16,7 @@ export class BookViewComponent implements OnInit {
   private book: any;
   private bookId: any;
   private copies: any[];
+  private hasNotifications: any;
   constructor(private route: ActivatedRoute,
               private bookService: BooksService,
               private cookieService: CookieService,
@@ -29,17 +30,6 @@ export class BookViewComponent implements OnInit {
         this.bookId = params.bookId;
       }
     );
-    // this.book = {id: this.bookId,
-    //   cover: 'https://images-na.ssl-images-amazon.com/images/I/810f%2BZy0ITL.jpg',
-    //   title: 'Love you first',
-    //   author: 'Arthur Smith',
-    //   category: 'Drama',
-    //   rating: 3.5,
-    //   condition: 'Cover intact,few pages missing.',
-    //    published_by: 'Humanitas',
-    //    publish_year: 2009,
-    //    pages: 230,
-    //     stock: 10};
     this.getBook();
   }
 
@@ -59,7 +49,7 @@ this.bookService.getBookById(this.bookId).subscribe(
   rentBook(bookId: any) {
     const dialogRef = this.dialog.open(RentBookComponent, {
       width: '700px',
-      data: {bookId:bookId}
+      data: {bookId, hasNotifications: this.hasNotifications}
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -69,7 +59,7 @@ this.bookService.getBookById(this.bookId).subscribe(
   bookABook(bookId: any) {
     const dialogRef = this.dialog.open(ReserveBookComponent, {
       width: '700px',
-      data: {bookId: this.bookId, copies: this.copies}
+      data: {bookId: this.bookId, copies: this.copies , hasNotifications: this.hasNotifications}
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -80,6 +70,18 @@ this.bookService.getBookById(this.bookId).subscribe(
     this.bookService.getCopies(this.bookId).subscribe(
       (copies) => {
 this.copies = copies;
+if (this.copies.length === 0) {
+  this.bookService.getNotifications({id: this.cookieService.get('userDetails'), bookId: this.bookId}).subscribe(
+    (notifs) => {
+      if (notifs.length > 0) {
+        this.hasNotifications = true;
+      }
+    },
+    (err) => {
+      this.notification.error(err);
+    }
+  );
+}
       },
       (error) => {
         console.log(error);

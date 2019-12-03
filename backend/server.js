@@ -128,6 +128,10 @@ const Categories=sequelize.define('category',{
     type:Sequelize.STRING
   }
 })
+
+const Notifications=sequelize.define('notification',{
+})
+
 const Books=sequelize.define('book',{
   cover:{
     type:Sequelize.STRING
@@ -188,6 +192,12 @@ const ReservedBooks=sequelize.define('reservedBooks',{
     type:Sequelize.BOOLEAN
   }
 })
+
+User.hasMany(Notifications);
+Notifications.belongsTo(User);
+
+Books.hasMany(Notifications);
+Notifications.belongsTo(Books);
 
 Libraries.hasMany(BookCopies);
 BookCopies.belongsTo(Libraries);
@@ -296,6 +306,18 @@ app.post('/books',(req,res,next)=>{
     .catch((err)=>next(err))
 });
 
+app.post('/notifications',(req,res,next)=>{
+  Notifications.create(req.body)
+    .then((result)=>res.status(201).json(result))
+    .catch((err)=>next(err))
+})
+
+app.post('/getnotifications',(req,res,next)=>{
+  Notifications.findAll({where:{UserId:req.body.id,bookId:req.body.bookId}})
+    .then((notifications)=>res.status(200).json(notifications))
+    .catch((err)=>next(err))
+})
+
 app.post('/users',(req,res,next)=>{
   User.create(req.body)
     .then((result)=>res.status(201).json(result))
@@ -347,7 +369,7 @@ app.get('/booksByLibrary/:id',(req,res,next)=>{
 });
 
 app.get('/copies/:id',(req,res,next)=>{
-  BookCopies.findAll({where:{bookId:req.params.id, [Op.or]: [{bookStatus: 1}, {bookStatusId: 2}]},include:[{model:Libraries}]})
+  BookCopies.findAll({where:{bookId:req.params.id, [Op.or]: [{bookStatusId: 1}, {bookStatusId: 2}]},include:[{model:Libraries}]})
     .then((books)=>res.status(200).json(books))
     .catch((err)=>next(err))
 });
@@ -403,6 +425,24 @@ app.post('/rents',(req,res,next)=>{
       next(err);
     })
 });
+
+app.get('/rents/:id',(req,res,next)=>{
+  RentedBooks.findAll({include:
+      [{model:User},
+        {model:librarians,where:{id:{[Op.ne]:2}}},
+        {model:BookCopies,where:{LibraryId:req.params.id}}]})
+    .then((rents)=>res.status(200).json(rents))
+    .catch((err)=>next(err))
+})
+
+app.get('/rentsbyusers/:id',(req,res,next)=>{
+  RentedBooks.findAll({include:
+      [{model:User},
+        {model:librarians,where:{id:{[Op.between]:[2,522]}}},
+        {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses}]}]})
+    .then((rents)=>res.status(200).json(rents))
+    .catch((err)=>next(err))
+})
 app.listen('3030',()=>{
   console.log('Server started on port 3030');
 });
