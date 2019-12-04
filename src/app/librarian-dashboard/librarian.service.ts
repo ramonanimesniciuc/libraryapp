@@ -20,7 +20,7 @@ return this.http.post('users', newUser);
     return this.http.get('rentsbyusers/' + libraryId);
   }
 
-  returnBook(bookId: any, copyId: any) {
-    return this.http.post('/returnBook', {bookId, copyId});
+  returnBook(rentedBook:any) {
+    return this.http.post('returnBook', rentedBook);
   }
 }

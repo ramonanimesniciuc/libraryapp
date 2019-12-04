@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   private loginLibrarian: boolean;
   constructor(private cookieService: CookieService,
               private authService: AuthService,
+              private notification: NotificationsService,
               private router: Router) { }
 
   ngOnInit() {
@@ -27,10 +29,15 @@ export class LoginComponent implements OnInit {
 //     }
     this.authService.login({username: this.username, password: this.password}).subscribe(
       (user) => {
-        this.cookieService.set('userLogged', 'user', 5);
-        this.cookieService.set('userDetails', user[0].id);
-        console.log(user);
-        this.router.navigate(['/books']);
+        if (user.length === 0) {
+          this.notification.error('Username or password wrong');
+        } else {
+          this.cookieService.set('userLogged', 'user', 5);
+          this.cookieService.set('userDetails', user[0].id);
+          console.log(user);
+          this.router.navigate(['/books']);
+        }
+
       },
       (error) => {
         console.log(error);
@@ -45,10 +52,16 @@ export class LoginComponent implements OnInit {
   loginAsLibrarian() {
 this.authService.loginLibrarian({username: this.username, password: this.password}).subscribe(
   (librarian) => {
-    this.cookieService.set('userLogged', 'librarian', 5);
-    console.log(librarian);
-    this.cookieService.set('libraryId', librarian[0].LibraryId);
-    this.router.navigate(['/books']);
+
+    if (librarian.length === 0) {
+      this.notification.error('Username or password wrong!');
+    } else {
+      this.cookieService.set('userLogged', 'librarian', 5);
+      console.log(librarian);
+      this.cookieService.set('libraryId', librarian[0].LibraryId);
+      this.router.navigate(['/books']);
+    }
+
   },
   (error) => {
     console.log(error);

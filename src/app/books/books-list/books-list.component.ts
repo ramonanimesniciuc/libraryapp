@@ -13,6 +13,7 @@ export class BooksListComponent implements OnInit {
   private books: any[];
   private locations: any;
   private response: any;
+  private loading: boolean;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private bookService: BooksService,
@@ -65,9 +66,11 @@ export class BooksListComponent implements OnInit {
     );
   }
   filterBooksByLibrary(libraryId: any) {
-  this.bookService.filterBooksByLibrary(libraryId).subscribe(
+    this.loading = true;
+    this.bookService.filterBooksByLibrary(libraryId).subscribe(
     (books) => {
-      this.books=books;
+      this.books = books;
+      this.loading = false;
     },
     (error) => {
       console.log(error);
@@ -75,9 +78,11 @@ export class BooksListComponent implements OnInit {
   );
   }
   getBooks() {
+    this.loading = true;
     this.bookService.getBooks().subscribe(
       (books) => {
        this.books = books;
+       this.loading = false;
        console.log(this.books);
       }
     );

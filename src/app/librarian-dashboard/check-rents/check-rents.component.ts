@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {LibrarianService} from '../librarian.service';
-import {MatDialog} from "@angular/material/dialog";
-import {RentBookComponent} from "../../books/rent-book/rent-book.component";
-import {ConfirmReturnComponent} from "../confirm-return/confirm-return.component";
+import {MatDialog} from '@angular/material/dialog';
+import {RentBookComponent} from '../../books/rent-book/rent-book.component';
+import {ConfirmReturnComponent} from '../confirm-return/confirm-return.component';
 
 @Component({
   selector: 'app-check-rents',
@@ -12,7 +12,7 @@ import {ConfirmReturnComponent} from "../confirm-return/confirm-return.component
 })
 export class CheckRentsComponent implements OnInit {
   private rents: any[];
-  private rentsbyusers:any[];
+  private rentsbyusers: any[];
   private displayColumns: any[];
   constructor(public cookieService: CookieService,
               public librarianService: LibrarianService,
@@ -43,7 +43,7 @@ export class CheckRentsComponent implements OnInit {
   );
   }
 
-  getAllRentsByUsers(){
+  getAllRentsByUsers() {
     this.librarianService.getRentsByUsers(this.cookieService.get('libraryId')).subscribe(
       (rents) => {
         this.rentsbyusers = rents;
@@ -54,13 +54,22 @@ export class CheckRentsComponent implements OnInit {
     );
   }
 
-  returnBook(book:any){
+  returnBook(book: any) {
     const dialogRef = this.dialog.open(ConfirmReturnComponent, {
       width: '700px',
-      data: {rentedBook:book.id}
+      data: {Book: book.bookCopy.book,
+        Library: book.bookCopy.Library,
+        rentedBookId: book.id,
+        bookId: book.bookCopy.bookId,
+        libraryId: book.bookCopy.LibraryId,
+        bookCopyId: book.bookCopyId ,
+        UserId: book.UserId ,
+        startDate: book.startDate ,
+        endDate: book.endDate}
     });
     dialogRef.afterClosed().subscribe(result => {
-
+     this.getAllRentsByUsers();
+     this.getAllRentsFromLocation();
     });
   }
 

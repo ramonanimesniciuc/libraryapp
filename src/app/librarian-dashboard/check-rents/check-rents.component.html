@@ -1,6 +1,6 @@
 <h1 class="check-list-title">List of rents made by librarians of this location</h1>
-<h3 *ngIf="rents.length===0" class="no-rented-books">There are no current rented books from this library</h3>
-<div class="table-rents" *ngIf="rents.length>0">
+<h3 *ngIf="rents && rents.length===0" class="no-rented-books">There are no current rented books from this library</h3>
+<div class="table-rents" *ngIf="rents && rents.length>0">
   <table mat-table [dataSource]="rents" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
@@ -43,7 +43,8 @@
 
 
 <h1 class="check-list-title">List of rents made by the users</h1>
-<div class="table-rents">
+<h3 *ngIf="rentsbyusers && rentsbyusers.length===0" class="no-rented-books">There are no current user rented books from this library</h3>
+<div class="table-rents" *ngIf="rentsbyusers && rentsbyusers.length!==0">
   <table mat-table [dataSource]="rentsbyusers" class="mat-elevation-z9">
 
     <!--- Note that these columns can be defined in any order.

@@ -16,11 +16,11 @@
     <h1>2.</h1>
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Book" aria-label="Book" [matAutocomplete]="auto" [(ngModel)]="selectedBook">
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete #auto="matAutocomplete" *ngIf="possibleBooks">
         <mat-option *ngFor="let book of possibleBooks" [value]="book.title">
           <img class="example-option-img" aria-hidden [src]="book.cover" height="25">
           <span>{{book.title}}</span> |
-          <small>Author: {{book.author}}</small>
+          <small>Author: {{book.AuthorId}}</small>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -41,5 +41,5 @@
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
   </div>
-  <button mat-button class="btn">Rent book </button>
+  <button mat-button class="btn" (click)="rentBook()">Rent book </button>
 </div>

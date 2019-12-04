@@ -5,6 +5,7 @@ const bodyParser=require('body-parser')
 const Sequelize = require('sequelize')
 const mysql=require('mysql2');
 const cors = require('cors');
+const nodemailer = require("nodemailer");
 const Op = Sequelize.Op;
 const sequelize = new Sequelize('libraryapp', 'root', '', {
   dialect : 'mysql',
@@ -35,6 +36,27 @@ const app=express()
 app.use(cors());
 app.use(bodyParser.json({limit:'100mb'}));
 
+//EMAIL PART
+const transport = {
+  service:'gmail',
+  auth: {
+    user: 'ramorra30@gmail.com',
+    pass: 'Umbrella25**'
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+};
+
+let transporter = nodemailer.createTransport(transport);
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Server is ready to take messages');
+  }
+});
 
 const User =sequelize.define('User',{
   first_name:{
@@ -166,6 +188,21 @@ comment:{
 }
 })
 
+const UserHistory=sequelize.define('userHistory',{
+  startDate:{
+    type:Sequelize.DATEONLY,
+  },
+  endDate:{
+    type:Sequelize.DATEONLY
+  },
+  comment:{
+    type:Sequelize.STRING
+  },
+  paymentExtra:{
+    type:Sequelize.INTEGER
+  }
+})
+
 const RentedBooks=sequelize.define('rentedBook',{
   startDate:{
     type:Sequelize.DATEONLY
@@ -222,6 +259,12 @@ BookCopies.belongsTo(BookStatuses);
 
 User.hasMany(RentedBooks);
 RentedBooks.belongsTo(User);
+
+User.hasMany(UserHistory);
+UserHistory.belongsTo(User);
+
+BookCopies.hasMany(UserHistory);
+UserHistory.belongsTo(BookCopies);
 
 librarians.hasMany(RentedBooks);
 RentedBooks.belongsTo(librarians);
@@ -430,7 +473,7 @@ app.get('/rents/:id',(req,res,next)=>{
   RentedBooks.findAll({include:
       [{model:User},
         {model:librarians,where:{id:{[Op.ne]:2}}},
-        {model:BookCopies,where:{LibraryId:req.params.id}}]})
+        {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses},{model:Libraries}]}]})
     .then((rents)=>res.status(200).json(rents))
     .catch((err)=>next(err))
 })
@@ -439,10 +482,98 @@ app.get('/rentsbyusers/:id',(req,res,next)=>{
   RentedBooks.findAll({include:
       [{model:User},
         {model:librarians,where:{id:{[Op.between]:[2,522]}}},
-        {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses}]}]})
+        {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses},{model:Libraries}]}]})
     .then((rents)=>res.status(200).json(rents))
     .catch((err)=>next(err))
 })
+
+app.post('/returnBook',(req,res,next)=>{
+  RentedBooks.destroy({where:{id:req.body.rentedBook.id}})
+    .then((succes)=>{
+      BookCopies.update({bookStatusId:1},{where:{id:req.body.rentedBook.bookCopyId}})
+        .then(()=>{
+          const userHistory={
+            startDate:req.body.rentedBook.startDate,
+            endDate:req.body.rentedBook.endDate,
+            paymentExtra: req.body.rentedBook.paymentExtra,
+            comment: req.body.rentedBook.comment,
+            UserId:req.body.rentedBook.UserId,
+            bookCopyId:req.body.rentedBook.bookCopyId
+          };
+          UserHistory.create(userHistory)
+            .then((success)=>{
+             Notifications.findAll({where:{UserId:req.body.rentedBook.UserId,bookId:req.body.rentedBook.bookId}})
+               .then((notifs)=>{
+                 if(notifs.length>0){
+                   let name = 'Notification: book is back!';
+                   let email = 'Biblioteque@gmail.com';
+                   let message = req.body.message;
+                   let content = `name: ${name} \n email: ${email} \n message: ${message} `;
+
+                   let mail = {
+                     from: name,
+                     to: 'nimesniciucramona15@stud.ase.ro',
+                     subject: 'Book is back!',
+                     text: content,
+                     html:`<h1 style="letter-spacing: 3px;font-family: 'Dancing Script', cursive;">Book ${req.body.Book.title} is back in ${req.body.Library.name}</h1>
+<h2 style="letter-spacing: 3px;font-family: 'Dancing Script', cursive;">Intra in contul tau sau vino in biblioteca pentru a lua cartea acasa!</h2>
+<img src="http://www.annpurnattcollege.com/Uploads/fileupload/391books-1-1024x417.jpg">`
+                   };
+                   transporter.sendMail(mail, (err, data) => {
+                     if (err) {
+                       res.json({
+                         msg: 'fail'
+                       })
+                     } else {
+                       Notifications.destroy({where:{UserId:req.body.rentedBook.UserId,bookId:req.body.rentedBook.bookId}})
+                         .then((success)=>{
+                           res.json({
+                             msg: 'success'
+                           })
+                         })
+                         .catch((err)=>next(err))
+                     }
+                   });
+                   res.status(201).json({message:'Book returned!Check user history!'})
+                 }
+               })
+               .catch((err)=>{
+                 next(err);
+               })
+            })
+          .catch((err)=>next(err))
+
+            })
+            .catch((err)=>next(err))
+        })
+    //     .catch((err)=>next(err))
+    // })
+    // .catch((err)=>next(err))
+
+});
+
+
+app.get('/rents-history',(req,res,next)=>{
+  UserHistory.findAll()
+    .then((rents)=>res.status(200).json(rents))
+    .catch((err)=>next(err))
+})
+
+app.get('/rents-history/:id',(req,res,next)=>{
+  UserHistory.findAll({where:{UserId:req.params.id},include:[{model:BookCopies,include:[{model:Books}]}]})
+    .then((rents)=>res.status(200).json(rents))
+    .catch((err)=>next(err))
+})
+
+
+
+app.get('/users',(req,res,next)=>{
+  User.findAll()
+    .then((users)=>res.status(200).json(users))
+    .catch((Err)=>next(Err))
+})
+
+
 app.listen('3030',()=>{
   console.log('Server started on port 3030');
 });

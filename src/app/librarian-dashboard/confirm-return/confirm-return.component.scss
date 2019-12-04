@@ -6,7 +6,8 @@
     margin: 20px;
     background: #99f2fa;
     color: #694429;
-    font-weight: bolder;
+    font-weight: lighter;
+    letter-spacing: 2px;
   }
 }
 h1{
@@ -14,4 +15,8 @@ h1{
   letter-spacing: 3px;
   font-weight: lighter;
   color: #9c6b35;
+}
+
+.extraDetails{
+  padding: 10px;
 }

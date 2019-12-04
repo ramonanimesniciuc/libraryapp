@@ -22,6 +22,7 @@ export class RentBookComponent implements OnInit {
               public dialogRef: MatDialogRef<RentBookComponent>, ) { }
 
   ngOnInit() {
+    this.copies=[];
     this.selectedCopy = this.data.bookId;
     this.hasNotifications = this.data.hasNotifications;
     this.getCopies();
@@ -37,9 +38,11 @@ rentBook() {
     this.booksService.rentABook(rent).subscribe(
       (success) => {
         this.notifications.success(success);
+        this.dialogRef.close();
       },
       (error) => {
         this.notifications.error(error);
+        this.dialogRef.close();
       }
     );
 }
