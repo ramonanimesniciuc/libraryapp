@@ -335,6 +335,7 @@ app.post('/bookCopies',(req,res,next)=>{
   copies.forEach((copy)=>{
     try{
       BookCopies.create(copy)
+        .then(()=>res.status(201).send({message:'Copy created'}));
     }
     catch(err){
       console.log(err)
@@ -386,9 +387,8 @@ app.get('/books/:id',(req,res,next)=>{
 });
 
 app.get('/booksByLibrary/:id',(req,res,next)=>{
-  BookCopies.findAll({where:{LibraryId:req.params.id},include:[{model:Books}]})
+  BookCopies.findAll({where:{LibraryId:req.params.id},include:[{model:Books,include:[{model:Authors}]}]})
     .then((books)=>{
-      console.log(books);
       let officialBooks=[];
       books.forEach((b)=>{
         Books.findByPk(b.bookId,{include:[{
@@ -399,9 +399,34 @@ app.get('/booksByLibrary/:id',(req,res,next)=>{
           },
           {
             model:BookCopies
-          }
+          },
+            {model:Authors}
         ]}).then((boook)=>{
-          console.log(boook);
+          officialBooks.push(boook);
+          // res.status(200).json(officialBooks);
+        })
+      });
+      setTimeout(()=>{res.status(200).json(officialBooks)},3000);
+    })
+    .catch((err)=>next(err))
+});
+
+app.get('/booksByLibraryAvailable/:id',(req,res,next)=>{
+  BookCopies.findAll({where:{LibraryId:req.params.id,bookStatusId:1},include:[{model:Books,include:[{model:Authors}]}]})
+    .then((books)=>{
+      let officialBooks=[];
+      books.forEach((b)=>{
+        Books.findByPk(b.bookId,{include:[{
+            model:Categories
+          },
+            {
+              model:PublishingHouses
+            },
+            {
+              model:BookCopies
+            },
+            {model:Authors}
+          ]}).then((boook)=>{
           officialBooks.push(boook);
           // res.status(200).json(officialBooks);
         })
@@ -462,7 +487,7 @@ app.post('/rents',(req,res,next)=>{
   RentedBooks.create(req.body)
     .then((success)=>{
       BookCopies.update({bookStatusId:4},{where:{id:req.body.bookCopyId}})
-        .then((success)=>res.status(201).send('Your copy is rented!'))
+        .then((success)=>res.status(201).send({message:'Your copy is rented!'}))
     })
     .catch((err)=>{
       next(err);
@@ -484,6 +509,12 @@ app.get('/rentsbyusers/:id',(req,res,next)=>{
         {model:librarians,where:{id:{[Op.between]:[2,522]}}},
         {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses},{model:Libraries}]}]})
     .then((rents)=>res.status(200).json(rents))
+    .catch((err)=>next(err))
+})
+
+app.post('/updateProfile/:id',(req,res,next)=>{
+  User.update({email:req.body.email,address:req.body.address},{where:{id:req.params.id}})
+    .then(()=>res.status(203).json({message:'User updated'}))
     .catch((err)=>next(err))
 })
 
@@ -527,9 +558,7 @@ app.post('/returnBook',(req,res,next)=>{
                      } else {
                        Notifications.destroy({where:{UserId:req.body.rentedBook.UserId,bookId:req.body.rentedBook.bookId}})
                          .then((success)=>{
-                           res.json({
-                             msg: 'success'
-                           })
+                           res.status(201).json({message:'Book returned!Check user history!'})
                          })
                          .catch((err)=>next(err))
                      }
@@ -572,6 +601,12 @@ app.get('/users',(req,res,next)=>{
     .then((users)=>res.status(200).json(users))
     .catch((Err)=>next(Err))
 })
+app.get('/users/:id',(req,res,next)=>{
+  User.findByPk(req.params.id)
+    .then((user)=>res.status(200).json(user))
+    .catch((Err)=>next(Err))
+})
+
 
 
 app.listen('3030',()=>{

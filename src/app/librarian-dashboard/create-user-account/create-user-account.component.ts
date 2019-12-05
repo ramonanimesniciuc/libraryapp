@@ -30,6 +30,7 @@ export class CreateUserAccountComponent implements OnInit {
 this.librarianService.createNewAccount(this.group.value).subscribe(
   (succes) => {
     this.notification.success('Account created!');
+    this.group.reset();
   },
   (error) => {
     this.notification.error(error);

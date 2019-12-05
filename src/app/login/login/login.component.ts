@@ -12,6 +12,7 @@ import {NotificationsService} from 'angular2-notifications';
 export class LoginComponent implements OnInit {
   private username: any;
   private password: any;
+  private loading: any;
   private loginLibrarian: boolean;
   constructor(private cookieService: CookieService,
               private authService: AuthService,
@@ -27,14 +28,17 @@ export class LoginComponent implements OnInit {
 // this.cookieService.set('userLogged', 'userDemo');
 // this.router.navigate(['/books']);
 //     }
+    this.loading=true;
     this.authService.login({username: this.username, password: this.password}).subscribe(
       (user) => {
         if (user.length === 0) {
           this.notification.error('Username or password wrong');
+          this.loading=false;
         } else {
           this.cookieService.set('userLogged', 'user', 5);
           this.cookieService.set('userDetails', user[0].id);
           console.log(user);
+          this.loading=false;
           this.router.navigate(['/books']);
         }
 
@@ -50,14 +54,17 @@ export class LoginComponent implements OnInit {
     this.loginLibrarian = !this.loginLibrarian;
   }
   loginAsLibrarian() {
+    this.loading=true;
 this.authService.loginLibrarian({username: this.username, password: this.password}).subscribe(
   (librarian) => {
 
     if (librarian.length === 0) {
       this.notification.error('Username or password wrong!');
+      this.loading=false;
     } else {
       this.cookieService.set('userLogged', 'librarian', 5);
       console.log(librarian);
+      this.loading=false;
       this.cookieService.set('libraryId', librarian[0].LibraryId);
       this.router.navigate(['/books']);
     }
@@ -65,6 +72,7 @@ this.authService.loginLibrarian({username: this.username, password: this.passwor
   },
   (error) => {
     console.log(error);
+    this.loading=false;
   }
 );
   }

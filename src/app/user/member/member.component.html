@@ -1,9 +1,8 @@
 <div class="container" *ngIf="!showEdit">
 
-  <h4><i class="far fa-user"></i>Name: {{userLogged.name}}</h4>
+  <h4><i class="far fa-user"></i>Name: {{userLogged.first_name}} {{userLogged.last_name}}</h4>
   <h4><i class="fas fa-at"></i>Email : {{userLogged.email}}</h4>
   <h4><i class="fas fa-map-marker-alt"></i>Address : {{userLogged.address}}</h4>
-  <h4><i class="fab fa-cc-visa"></i>Card number: {{userLogged.cardNumber}}</h4>
 </div>
 <button type="button" *ngIf="!showEdit" class="btn btn-secondary" (click)="showEditProfile()">Edit</button>
 <div class="container-edit" *ngIf="showEdit">
@@ -11,48 +10,7 @@
   <input type="text" class="form-control" [(ngModel)]="userLogged.name" placeholder="Name">
   <input type="email" class="form-control" [(ngModel)]="userLogged.email" placeholder="Email">
   <input type="text" class="form-control" [(ngModel)]="userLogged.address" placeholder="Address">
-  <div class="form-group owner">
-    <label for="owner">Owner</label>
-    <input type="text" class="form-control" id="owner">
-  </div>
-  <div class="form-group CVV">
-    <label for="cvv">CVV</label>
-    <input type="text" class="form-control" id="cvv">
-  </div>
-  <div class="form-group" id="card-number-field">
-    <label for="cardNumber">Card Number</label>
-    <input type="text" class="form-control" id="cardNumber">
-  </div>
-  <div class="form-group" id="expiration-date">
-    <label>Expiration Date</label>
-    <select>
-      <option value="01">January</option>
-      <option value="02">February </option>
-      <option value="03">March</option>
-      <option value="04">April</option>
-      <option value="05">May</option>
-      <option value="06">June</option>
-      <option value="07">July</option>
-      <option value="08">August</option>
-      <option value="09">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-    <select>
-      <option value="16"> 2016</option>
-      <option value="17"> 2017</option>
-      <option value="18"> 2018</option>
-      <option value="19"> 2019</option>
-      <option value="20"> 2020</option>
-      <option value="21"> 2021</option>
-    </select>
-  </div>
-  <div class="form-group" id="credit_cards">
-    <img src="../../../assets/images/visa.jpg" id="visa">
-    <img src="../../../assets/images/mastercard.jpg" id="mastercard">
-    <img src="../../../assets/images/amex.jpg" id="amex">
-  </div>
+
   <div class="form-group" id="pay-now">
     <button type="button" class="btn btn-default" (click)="updateProfile()" id="confirm-purchase">Confirm</button>
   </div>

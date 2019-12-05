@@ -4,9 +4,9 @@
     <h1>1.</h1>
     <mat-form-field>
       <mat-label>Select user</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="userSelected">
         <mat-option *ngFor="let user of users" [value]="user.id">
-          {{user.name}}
+          {{user.first_name}} {{user.last_name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -15,20 +15,21 @@
   <div class="row" >
     <h1>2.</h1>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Book" aria-label="Book" [matAutocomplete]="auto" [(ngModel)]="selectedBook">
-      <mat-autocomplete #auto="matAutocomplete" *ngIf="possibleBooks">
-        <mat-option *ngFor="let book of possibleBooks" [value]="book.title">
-          <img class="example-option-img" aria-hidden [src]="book.cover" height="25">
-          <span>{{book.title}}</span> |
-          <small>Author: {{book.AuthorId}}</small>
-        </mat-option>
-      </mat-autocomplete>
+      <input matInput placeholder="Book" aria-label="Book" [(ngModel)]="bookInput">
     </mat-form-field>
+    <i class="fas fa-search" (click)="searchBook()" ></i>
+  </div>
+  <div class="row" *ngIf="filteredBooks.length>0">
+    <div class="col-md-12 booksFiltered" *ngFor="let filterbook of filteredBooks">
+      <div (click)="selectBook(filterbook)">
+        {{filterbook.title}} by {{filterbook.Author.name}} {{filterbook.bookCopies.length}} copies
+      </div>
+    </div>
   </div>
   <div class="row">
     <h1>3.</h1>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Choose start date">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" placeholder="Choose start date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -36,7 +37,7 @@
   <div class="row">
     <h1>4.</h1>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker2" placeholder="Choose end date">
+      <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" placeholder="Choose end date">
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
