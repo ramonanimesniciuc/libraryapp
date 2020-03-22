@@ -5,6 +5,7 @@ const mysql=require('mysql2');
 const cors = require('cors');
 const sequelize = new Sequelize('libraryapp', 'root', '', {
   dialect : 'mysql',
+  port:3336,
   operatorsAliases: false,
   define:{
     timestamps:false
