@@ -1,46 +1,44 @@
 
-<div class="view-book">
-  {{cookieService.get('userToken')}}
-<!--  <div class="row">-->
-<!--    <div class="col-md-4">-->
-<!--      <img class="img-cover" src="https://img0-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/37836/large_thumb_stage.jpg">-->
-<!--    </div>-->
-<!--    <div class="col-md-8"></div>-->
+<div class="row view-book">
+
+<!--  <div class="parent row">-->
+<!--    <span onclick="fireCredit()"><i class="fa fa-bell"></i></span>-->
 <!--  </div>-->
-  <div class="parent">
-    <span onclick="fireCredit()"><i class="fa fa-bell"></i></span>
-  </div>
-  <main>
-    <div class="book-card">
-      <div class="book-card__cover">
-        <div class="book-card__book">
-          <div class="book-card__book-front">
-            <img class="book-card__img" src="{{book.cover}}" />
+  <div class="col-6 col-sm-6">
+    <main>
+      <div class="book-card">
+        <div class="book-card__cover">
+          <div class="book-card__book">
+            <div class="book-card__book-front">
+              <img class="book-card__img" src="{{book.cover}}" />
+            </div>
+            <div class="book-card__book-back"></div>
+            <div class="book-card__book-side"></div>
           </div>
-          <div class="book-card__book-back"></div>
-          <div class="book-card__book-side"></div>
+        </div>
+        <div>
+          <div class="book-card__title">
+            {{book.title}}
+          </div>
+          <div class="book-card__author">
+            {{book.author}}
+          </div>
         </div>
       </div>
-      <div>
-        <div class="book-card__title">
-          {{book.title}}
-        </div>
-        <div class="book-card__author">
-          {{book.author}}
-        </div>
-      </div>
-    </div>
-  </main>
-  <div class="pull-left details-book">
-    <p class="book_attributes"><span class="caps">C</span>ategory: {{book.category}}</p>
-    <p class="book_attributes"><span class="caps">D</span>escription: {{book.description}}</p>
-    <p class="book_attributes"><span class="caps">P</span>ages: {{book.pages}}</p>
-    <p class="book_attributes"><span class="caps">Y</span>ear of publishing: {{book.publish_year}}</p>
-    <p class="book_attributes"><span class="caps">P</span>ublished by: {{book.published_by}}</p>
-    <p class="book_attributes"><span class="caps">R</span>ating: {{book.rating}}<i class="fas fa-star"></i></p>
-    <p class="book_attributes"><span class="caps">I</span>n stock: {{book.stock}}</p>
-    <p class="book_attributes"><span class="caps">C</span>ondition: {{book.condition}}</p>
-   <button  mat-button class="mat-button pull-left" (click)="rentBook(bookId)"> <i class="fas fa-bookmark" ></i> Rent book</button>
-    <button  mat-button class="mat-button2 pull-right" (click)="bookABook(bookId)"> <i class="fas fa-bookmark" ></i> Book it</button>
+    </main>
   </div>
+<div class="col-6 col-sm-6">
+  <div class="pull-left details-book row">
+    <p class="book_attributes col-12" *ngIf="book.category"><span class="caps">C</span>ategory: {{book.category.title}}</p>
+    <p class="book_attributes col-12"><span class="caps">D</span>escription: {{book.description}}</p>
+    <p class="book_attributes col-12"><span class="caps">P</span>ages: {{book.pages}}</p>
+    <p class="book_attributes col-12 "><span class="caps">D</span>ate of publishing: {{book.publishedDate}}</p>
+    <p class="book_attributes col-12" *ngIf="book.PublishingHouse"><span class="caps">P</span>ublished by: {{book.PublishingHouse.name}}</p>
+    <p class="book_attributes col-12"><span class="caps">R</span>ating: {{book.rating}}<i class="fas fa-star"></i></p>
+    <p class="book_attributes col-12"><span class="caps">I</span>n stock: {{book.stock}}</p>
+    <p class="book_attributes col-12"><span class="caps">C</span>ondition: {{book.condition}}</p>
+   <button  mat-button class="mat-button pull-left col-12" (click)="rentBook(bookId)"> <i class="fas fa-bookmark" ></i> Rent book</button>
+    <button  mat-button class="mat-button2 pull-right col-12" (click)="bookABook(bookId)"> <i class="fas fa-bookmark" ></i> Book it</button>
+  </div>
+</div>
 </div>

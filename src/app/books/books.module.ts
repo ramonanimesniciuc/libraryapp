@@ -11,6 +11,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CoreModule} from '../core/core.module';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [BooksListComponent, RentBookComponent, BookCardComponent, BookViewComponent, ReserveBookComponent, DeleteBookComponent],
@@ -20,6 +21,7 @@ import { DeleteBookComponent } from './delete-book/delete-book.component';
     MatDatepickerModule,
     MatAutocompleteModule,
     FormsModule,
+    MatProgressSpinnerModule,
     CoreModule,
     ReactiveFormsModule,
     MatFormFieldModule,

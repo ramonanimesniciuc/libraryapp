@@ -1,0 +1,14 @@
+<h1>Confirm book return?</h1>
+<div class="row extraDetails">
+  <input class="input-group form-group" [(ngModel)]="comment" placeholder="Book status">
+  <mat-select placeholder="Choose payment" [(value)]="extraPayment">
+    <mat-option *ngFor="let pay of payments" [value]="pay.value">
+      {{pay.title}}
+    </mat-option>
+  </mat-select>
+</div>
+<div class="buttonDiv">
+  <button type="button" mat-button class="btn button col-md-4 btn-primary" (click)="confirmReturn()">Yes</button>
+  <button type="button" mat-button class="btn button col-md-4 btn-primary" (click)="closeDialog()">No</button>
+</div>
+

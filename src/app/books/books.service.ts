@@ -10,21 +10,70 @@ import { HttpService } from '../core/http-service';
 export class BooksService {
   private headers: HttpHeaders;
   constructor(private http: HttpService,
-              private authService: AuthService ,) {
+              private authService: AuthService , ) {
   }
 
 
-  getBookById(bookId: any){
-    return this.http.get('/public/books/byId/' + '5f987d27-c7ae-4a59-b14b-5f80a49d4ce7');
+  getBookById(bookId: any) {
+    return this.http.get('books/' + bookId);
   }
-  getLibraries(){
-    return this.http.get('public/libraries/all');
+  getLibraries() {
+    return this.http.get('libraries');
   }
 
-  getBooks(){
-    return this.http.get('public/books/all');
+  getBooks() {
+    return this.http.get('books');
   }
-  postBook(book:any){
-    return this.http.post('private/books',book);
+  postBook(book: any) {
+    return this.http.post('books', book);
+  }
+
+  getAuthors() {
+    return this.http.get('authors');
+  }
+
+  getPublishHouses() {
+    return this.http.get('publishingHouses');
+  }
+
+  getCategories() {
+    return this.http.get('categories');
+  }
+  getStatuses() {
+    return this.http.get('bookStatuses');
+  }
+
+  postBookCopies(bookCopy: any[]) {
+    return this.http.post('bookCopies', bookCopy);
+  }
+
+  filterBooksByLibrary(libraryId: any) {
+    return this.http.get('booksByLibrary/' + libraryId);
+  }
+filterBookByLibraryAvailable(libraryId: any) {
+    return this.http.get('booksByLibraryAvailable/' + libraryId);
+}
+  getReservedTypes() {
+    return this.http.get('reservedTypes');
+  }
+
+  getCopies(bookId: any) {
+    return this.http.get('copies/' + bookId);
+  }
+
+  bookABook(book: any) {
+    return this.http.post('bookit', book);
+  }
+
+  rentABook(book: any) {
+    return this.http.post('rents', book);
+  }
+
+  addNotification(notification: any) {
+    return this.http.post('notifications', notification);
+  }
+
+  getNotifications(notification: any) {
+    return this.http.post('getnotifications', notification);
   }
 }

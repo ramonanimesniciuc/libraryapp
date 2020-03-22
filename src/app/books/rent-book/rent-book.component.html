@@ -1,14 +1,35 @@
 <div class="rent-book-div">
-  <mat-form-field class="col-md-6">
-    <input matInput [matDatepicker]="picker" placeholder="Choose a start date">
+  <mat-form-field class="col-md-6" *ngIf="copies.length!==0" >
+    <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" placeholder="Choose a start date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <mat-form-field class="col-md-6">
-    <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+  <mat-form-field class="col-md-6" *ngIf="copies.length!==0">
+    <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" placeholder="Choose an end date">
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
-  <button mat-button class="col-md-12"><i class="fas fa-bookmark"></i>Rent book</button>
+  <div class="col-md-12" *ngIf="copies.length===0 && !this.hasNotifications">
+    <h4 class="col-md-12 notification">There are no books available for renting!
+    Click the notification button if you want to be notified when the book is back!
+    </h4>
+    <button mat-button type="button" class="btn btn-primary col-md-12 notificationBtn" (click)="notifyUser()">Notify me</button>
+  </div>
+  <div class="col-md-12" *ngIf="copies.length===0 && this.hasNotifications">
+    <h4 class="col-md-12 notification-active">You have a notification active for this book!
+      We'll notify you once it's back!!
+    </h4>
+  </div>
+  <div class="col-md-12" *ngIf="copies.length>0">
+    <h3>Choose location:</h3>
+    <div class="col-md-12 divCopies">
+      <mat-select placeholder="Select the copy location you want" [(value)]="selectedCopy">
+        <mat-option *ngFor="let copy of copies" [value]="copy.id">
+          {{copy.Library.name}}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+  <button mat-button class="col-md-12" *ngIf="copies.length>0" (click)="rentBook()"><i class="fas fa-bookmark"></i>Rent book</button>
 </div>
 

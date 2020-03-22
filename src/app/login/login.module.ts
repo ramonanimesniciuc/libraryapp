@@ -4,14 +4,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from './auth.service';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   providers:[AuthService]
 })

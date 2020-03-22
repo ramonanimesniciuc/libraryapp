@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {map, startWith} from 'rxjs/operators';
+import {BooksService} from '../../books/books.service';
+import {CookieService} from 'ngx-cookie-service';
+import {UserService} from '../../user/user.service';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-lend-book',
@@ -11,58 +15,92 @@ export class LendBookComponent implements OnInit {
   private selectedBook: any;
   private possibleBooks: any[];
   private filteredBooks: any[];
+  private startDate: any;
+  private endDate: any;
+  private rent: any;
+  private bookInput: any;
+  private userSelected: any;
 
-  constructor() {
+  constructor(private booksService: BooksService,
+              private cookieService: CookieService,
+              private notification: NotificationsService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
-    this.selectedBook='';
+    this.filteredBooks = [];
+    this.selectedBook = '';
     this.users = [{id: 1, name: 'Florentina Ion'}];
-    this.possibleBooks = [{
-      id: 1,
-      title: 'A love story',
-      author: 'A.S.Princke',
-      status: 'available',
-      cover: 'https://images-na.ssl-images-amazon.com/images/I/51Jwl5TIcuL._SX308_BO1,204,203,200_.jpg'
-    },
-      {
-        id: 2,
-        title: 'One Day',
-        author: 'Henry Smith',
-        status: 'rented',
-        cover: 'https://images4.penguinrandomhouse.com/cover/9780307946713'
-      },
-      {
-        id: 3,
-        title: 'The ABC murders',
-        author: 'Agatha Christie',
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/513J5erqllL._SX308_BO1,204,203,200_.jpg'
-      },
-      {
-        id: 4,
-        title: 'The ABC murders',
-        author: 'Agatha Christie',
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/513J5erqllL._SX308_BO1,204,203,200_.jpg'
-      },
-      {
-        id: 3,
-        title: 'The ABC murders',
-        author: 'Agatha Christie',
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/513J5erqllL._SX308_BO1,204,203,200_.jpg'
-      },
-      {
-        id: 4,
-        title: 'The ABC murders',
-        author: 'Agatha Christie',
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/513J5erqllL._SX308_BO1,204,203,200_.jpg'
-      },
-      // tslint:disable-next-line:max-line-length
-      {
-        id: 5,
-        title: 'Death on the Nile',
-        author: 'Agatha Christie',
-        cover: 'https://kbimages1-a.akamaihd.net/0b20f759-14c8-4609-98aa-f54fcd3f6f5e/353/569/90/False/death-on-the-nile.jpg'
-      }];
+    this.possibleBooks = [];
+    this.getBooksByLocation();
+    this.getUsers();
   }
+
+  rentBook() {
+     this.rent = {
+      startDate: this.startDate,
+      endDate: this.endDate,
+      UserId: this.userSelected,
+      LibrarianId: this.cookieService.get('userDetails'),
+      bookCopyId: this.selectedBook
+  };
+
+     this.booksService.rentABook(this.rent).subscribe(
+       (success) => {
+         this.notification.success('Book Rented!');
+         this.selectedBook='';
+         this.userSelected='';
+         this.startDate='';
+         this.endDate='';
+         this.filteredBooks=[];
+         this.getBooksByLocation();
+       },
+       (err) => {
+         console.log(err);
+         this.notification.error(err);
+       }
+     );
+
+  }
+
+  getBooksByLocation() {
+    this.booksService.filterBookByLibraryAvailable(this.cookieService.get('libraryId')).subscribe(
+      (books) => {
+        this.possibleBooks = books;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  selectBook(book: any) {
+  this.selectedBook = book.bookCopies[0].id;
+  const div = document.querySelector('.booksFiltered') as HTMLElement;
+  div.style.backgroundColor = 'darkgreen';
+  }
+
+  getUsers() {
+    this.userService.getAllUsers().subscribe(
+      (users) => {
+        this.users = users;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+  }
+
+  searchBook() {
+    this.filteredBooks = [];
+    this.possibleBooks.forEach((book) => {
+     if (book.title.includes(this.bookInput)) {
+       this.filteredBooks.push(book);
+     }
+   });
+  }
+
+
 
 }

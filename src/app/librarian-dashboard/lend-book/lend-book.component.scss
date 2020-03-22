@@ -46,3 +46,31 @@ h1{
   padding: 10px;
   width: 680px;
 }
+
+.fa-search{
+  padding: 20px;
+  font-size: 24px;
+  color:#0c5460;
+  cursor:pointer;
+}
+
+.booksFiltered{
+background: #0c5460;
+  border: 1px solid darkgoldenrod;
+  color:white;
+  font-weight: lighter;
+  letter-spacing: 2px;
+  font-size: 14px;
+  margin: auto;
+  cursor: pointer;
+}
+.booksFiltered:hover{
+  background: #a3edf5;
+  border: 1px solid #0e2946;
+  color: #7a2915;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 14px;
+  margin: auto;
+  cursor: pointer;
+}

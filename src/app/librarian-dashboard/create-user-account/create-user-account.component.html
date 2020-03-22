@@ -1,17 +1,28 @@
 <div class="create-account">
   <h1>Create a new account</h1>
   <form [formGroup]="group">
-    <mat-form-field formControlName="email" >
-      <input matInput class="input-group-text" type="email" placeholder="Enter user email">
+    <mat-form-field  >
+      <input matInput class="input-group-text" type="email" formControlName="email" placeholder="Enter user email">
     </mat-form-field>
-    <mat-form-field formControlName="name">
-      <input matInput class="input-group-text" type="text" placeholder="Enter user name">
+    <mat-form-field >
+      <input matInput class="input-group-text" formControlName="first_name" type="text" placeholder="Enter user  first name">
     </mat-form-field>
-    <mat-form-field formControlName="password">
-      <input matInput class="input-group-text" type="password" placeholder="Enter user password">
+    <mat-form-field >
+      <input matInput class="input-group-text" formControlName="last_name" type="text" placeholder="Enter user  last name">
     </mat-form-field>
-    <mat-form-field formControlName="card_number" class="card-number-field">
-      <input matInput class="input-group-text"  placeholder="Enter user card number">
+    <mat-form-field >
+      <input matInput class="input-group-text" formControlName="username" type="text" placeholder="Enter username">
+    </mat-form-field>
+    <mat-form-field >
+      <input matInput class="input-group-text" formControlName="password" type="password" placeholder="Enter user password">
+    </mat-form-field>
+    <mat-form-field  class="card-number-field">
+      <input matInput class="input-group-text" formControlName="address"  placeholder="Enter user address">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="birthdate" [matDatepicker]="picker" placeholder="Choose birthdate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </form>
   <button type="button" class="form-button" (click)="createAccount()">Create account</button>

@@ -1,18 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins);
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 .view-book{
-  margin-left:10%;
+  margin-left:5%;
   text-align: center;
-  padding: 30px;
-  display: flex;
-  flex-direction: row;
-  .row{
-
-    .img-cover{
-      min-height: 500px;
-      min-width: 350px;
-    }
-  }
+  //padding: 20px;
+  //display: flex;
+  //flex-direction: row;
+  //.row{
+  //
+  //  .img-cover{
+  //    min-height: 500px;
+  //    min-width: 350px;
+  //  }
+  //}
 }
 /////////////////////
 // Base
@@ -29,9 +29,9 @@ html {
 }
 
 body {
-   display: flex;
+   //display: flex;
    color: #313131;
-   font-family: "Times New Roman", serif;
+   font-family: "Poppins-Regular", serif;
    background-color: #673ab7;
    background: linear-gradient(
        45deg,
@@ -83,6 +83,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: left;
+  padding: 30px;
 }
 
 
@@ -91,7 +92,7 @@ main {
 //////////////////////////
 .book-card {
   width: 700px;
-  height: 750px;
+  height: 100%;
   padding: 50px;
   border-radius: 5px;
   background-color: #fcf9ea;
@@ -149,8 +150,10 @@ main {
   }
 
   .book-card__title {
-    font-size: 1.5em;
+    font-size: 1.6em;
     margin-bottom: 8px;
+    letter-spacing: 3px;
+    font-weight: lighter;
   }
 
   .book-card__author {
@@ -176,11 +179,11 @@ main {
 
 .details-book{
   width: 700px;
-  height: 750px;
+  height: 87%;
   padding: 10px;
   border-radius: 5px;
   background-color: #ffc5a1;
-  margin-top: 60px;
+  margin-top: 87px;
   margin-left: 0;
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.16),
@@ -209,9 +212,9 @@ main {
     text-transform: uppercase;
     text-decoration: none;
     background: #fcf9ea;
-    padding: 20px;
+    padding: 10px;
     width: 200px;
-    margin-top: 50px;
+    margin-top: 35px;
     border-radius: 5px;
     display: inline-block;
     border: none;
@@ -226,8 +229,8 @@ main {
     text-transform: uppercase;
     text-decoration: none;
     background: #fcf9ea;
-    padding: 20px;
-    margin-top: 50px;
+    padding: 10px;
+    margin-top: 45px;
     width: 200px;
     border-radius: 5px;
     display: inline-block;
@@ -307,3 +310,4 @@ main {
   top:0px;
   left:8px;
 }
+

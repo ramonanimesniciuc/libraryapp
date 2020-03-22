@@ -1,5 +1,6 @@
-<h1 class="check-list-title">List of rents</h1>
-<div class="table-rents">
+<h1 class="check-list-title">List of rents made by librarians of this location</h1>
+<h3 *ngIf="rents && rents.length===0" class="no-rented-books">There are no current rented books from this library</h3>
+<div class="table-rents" *ngIf="rents && rents.length>0">
   <table mat-table [dataSource]="rents" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
@@ -8,25 +9,74 @@
     <!-- Position Column -->
     <ng-container matColumnDef="book">
       <th mat-header-cell *matHeaderCellDef> Book </th>
-      <td mat-cell *matCellDef="let element"> {{element.book}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.bookCopy?element.bookCopy.book.title:''}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="user">
       <th mat-header-cell *matHeaderCellDef> User </th>
-      <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.User?element.User.first_name  :''}}  {{element.User?element.User.last_name  :''}} </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.bookCopy?element.bookCopy.bookStatus.title:''}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef>  </th>
     <td mat-cell *matCellDef="let element"> <i class="fas fa-envelope-square"></i> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="return">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element" class="returnBook" (click)="returnBook(element)"> <i class="fas fa-undo"></i> Return book </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+  </table>
+
+</div>
+
+
+<h1 class="check-list-title">List of rents made by the users</h1>
+<h3 *ngIf="rentsbyusers && rentsbyusers.length===0" class="no-rented-books">There are no current user rented books from this library</h3>
+<div class="table-rents" *ngIf="rentsbyusers && rentsbyusers.length!==0">
+  <table mat-table [dataSource]="rentsbyusers" class="mat-elevation-z9">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="book">
+      <th mat-header-cell *matHeaderCellDef> Book </th>
+      <td mat-cell *matCellDef="let element"> {{element.bookCopy?element.bookCopy.book.title:''}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef> User </th>
+      <td mat-cell *matCellDef="let element"> {{element.User?element.User.first_name  :''}}  {{element.User?element.User.last_name  :''}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.bookCopy?element.bookCopy.bookStatus.title:''}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element"> <i class="fas fa-envelope-square"></i> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="return">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element" class="returnBook" (click)="returnBook(element)"> <i class="fas fa-undo"></i> Return book </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>

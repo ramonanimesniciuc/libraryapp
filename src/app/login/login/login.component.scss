@@ -141,7 +141,13 @@ iframe {
   line-height: 1.5;
   color: #666666;
 }
-
+.txt1:hover {
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1382cb;
+  cursor: pointer;
+}
 .txt2 {
   font-family: Poppins-Regular;
   font-size: 14px;
@@ -316,6 +322,7 @@ iframe {
   flex-wrap: wrap;
   justify-content: center;
 }
+
 
 .wrap-login100-form-btn {
   width: 100%;
@@ -3466,7 +3473,8 @@ iframe {
 
 
 
-
-
+.librarinLogBtn{
+  background: #0e2946;
+}
 
 

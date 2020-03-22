@@ -1,8 +1,8 @@
-<div class="container" *ngIf="cookieService.get('userToken')">
+<div class="container" *ngIf="cookieService.get('userLogged')">
 <div id="large-th">
   <div class="select-location"><mat-form-field class="select-location">
       <mat-label>   <i class="fas fa-map-marker-alt"></i>Choose library location</mat-label>
-      <mat-select>
+      <mat-select (selectionChange)="changeBookFilter($event)">
         <mat-option *ngFor="let location of locations" [value]="location.id">
           {{location.name}}
         </mat-option>
@@ -12,9 +12,18 @@
 
   <div class="container">
     <br>
+    <div class="row" style="text-align: center">
+      <mat-progress-spinner
+        *ngIf="loading"
+        class="example-margin"
+        [color]="'primary'"
+        [mode]="'indeterminate'">
+      </mat-progress-spinner>
+    </div>
     <div class="row">
+      <h1 class="no-books" *ngIf="books && books.length===0">There are no available books in this library!</h1>
       <div id="list-th" class="col-md-4 col-sm-3" *ngFor="let book of books">
-        <app-book-card (click)="goToBookVirew(book.id)" class="bookCard" [author]="book.author" [title]="book.title" [cover]="book.cover"></app-book-card>
+        <app-book-card (click)="goToBookVirew(book.id)" class="bookCard" [rating]="book.rating" [author]="book.Author?book.Author.name:''" [title]="book.title" [cover]="book.cover"></app-book-card>
 
       </div>
     </div>

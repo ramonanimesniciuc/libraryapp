@@ -18,9 +18,11 @@ import {LoginModule} from './login/login.module';
 import {UserModule} from './user/user.module';
 import {LibrarianDashboardModule} from './librarian-dashboard/librarian-dashboard.module';
 import {HttpClientModule} from '@angular/common/http';
+import {OnlyDate} from './shared/pipes/onlyDate.pipe';
+import {SharedModule} from './shared/shared.module';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,10 +37,13 @@ import {HttpClientModule} from '@angular/common/http';
     RentModule,
     LoginModule,
     UserModule,
+    SharedModule,
     LibrarianDashboardModule
 
   ],
-  exports: [],
+  exports: [
+    SharedModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
