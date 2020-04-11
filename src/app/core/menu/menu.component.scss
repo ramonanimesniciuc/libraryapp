@@ -1,28 +1,34 @@
 .example-sidenav{
-  background: #badfdb;
+  background: transparent;
   color: #fcf9ea;
   z-index: 2;
   font-weight: bold;
   font-size: 18px;
   a{
     padding: 20px;
-    font-size: 22px;
+    font-size: 11px;
    }
   .menu-item{
     padding: 20px;
+
+    img{
+      width: 100%;
+    }
   }
   .fas{
     color: #8a2303;
     padding: 5px;
-    font-size: 22px;
+    font-size: 20px;
   }
   .fab{
     color: #8a2303;
     padding: 5px;
-    font-size: 22px;
+    font-size: 20px;
   }
 }
-
+#sidenav{
+  bottom: 7vh!important;
+}
 .btn{
   cursor:pointer;
   position:relative;

@@ -1,11 +1,53 @@
-<div class="container">
+<div class="delete-container">
   <h1 class="form-title">Choose an existing book to delete if old or depricated</h1>
-  <div class="col-md-12 searchDiv">
+  <div class="searchDiv">
     <div class="search ">
-      <input type="text" class="searchTerm" placeholder="Search for a book to take out of the library">
-      <button type="button" class="searchButton">
+      <input type="text" (keyup.enter)="search()" [(ngModel)]="searchValue" class="searchTerm" placeholder="Search for a book to take out of the library">
+      <button type="button" (click)="search()" class="searchButton">
         <i class="fa fa-search"></i>
       </button>
     </div>
+    <div class="row" style="text-align: center">
+      <mat-progress-spinner
+        *ngIf="loading"
+        class="example-margin"
+        [color]="'primary'"
+        [mode]="'indeterminate'">
+      </mat-progress-spinner>
+    </div>
+    <table mat-table *ngIf="dataSource.length>0" [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.book.title}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let element"> {{element.book.Author.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="biblioteque">
+        <th mat-header-cell *matHeaderCellDef> Bibilioteque </th>
+        <td mat-cell *matCellDef="let element"> {{element.Library.name}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element" matTooltip="Delete from existing stock"> <i class="fas fa-trash" (click)="delete(element.id)"></i> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
   </div>
 </div>

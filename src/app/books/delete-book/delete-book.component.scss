@@ -1,7 +1,7 @@
 .search {
   width: 60%;
   font-family: Poppins-Regular,sans-serif;
-  font-size: 22px;
+  font-size: 15px;
   position: relative;
   display: flex;
   margin-top:30px;
@@ -41,4 +41,29 @@ h1{
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   font-size: 20px;
+}
+table {
+  width: 68%;
+  margin-left: -3%;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  letter-spacing: 5px;
+  font-weight: bold;
+}
+
+tr.mat-header-row {
+  background: #00B4CC;
+
+}
+
+.fas.fa-trash{
+  cursor:pointer;
+}
+
+.fas:hover{
+  color:red;
+  opacity:0.5;
+}
+mat-progress-spinner{
+  margin-left: 25%;
 }

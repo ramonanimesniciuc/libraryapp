@@ -3,16 +3,7 @@
 .view-book{
   margin-left:5%;
   text-align: center;
-  //padding: 20px;
-  //display: flex;
-  //flex-direction: row;
-  //.row{
-  //
-  //  .img-cover{
-  //    min-height: 500px;
-  //    min-width: 350px;
-  //  }
-  //}
+padding:5%;
 }
 /////////////////////
 // Base
@@ -91,16 +82,16 @@ main {
 // Component: Book Card
 //////////////////////////
 .book-card {
-  width: 700px;
+  width: 100%;
   height: 100%;
   padding: 50px;
   border-radius: 5px;
-  background-color: #fcf9ea;
+  //background-color: #fcf9ea;
   margin-top: 60px;
   margin-left: 0;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.16),
-    0 3px 6px rgba(0, 0, 0, 0.23);
+  //box-shadow:
+  //  0 3px 6px rgba(0, 0, 0, 0.16),
+  //  0 3px 6px rgba(0, 0, 0, 0.23);
 
   .book-card__cover {
     position: relative;
@@ -178,19 +169,19 @@ main {
 }
 
 .details-book{
-  width: 700px;
-  height: 87%;
+  width: 100%;
+  height:100%;
   padding: 10px;
   border-radius: 5px;
-  background-color: #ffc5a1;
+  //background-color: #ffc5a1;
   margin-top: 87px;
   margin-left: 0;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.16),
-    0 3px 6px rgba(0, 0, 0, 0.23);
+  //box-shadow:
+  //  0 3px 6px rgba(0, 0, 0, 0.16),
+  //  0 3px 6px rgba(0, 0, 0, 0.23);
 .book_attributes{
   padding: 10px;
-  background: #76dbd1;
+  //background: #76dbd1;
 }
 
   .caps {

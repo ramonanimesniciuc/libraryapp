@@ -9,6 +9,7 @@ import { HttpService } from '../core/http-service';
 })
 export class BooksService {
   private headers: HttpHeaders;
+  public books: any[];
   constructor(private http: HttpService,
               private authService: AuthService , ) {
   }
@@ -75,5 +76,14 @@ filterBookByLibraryAvailable(libraryId: any) {
 
   getNotifications(notification: any) {
     return this.http.post('getnotifications', notification);
+  }
+
+  search(searchValue:string) {
+    return this.http.get('search/' + searchValue);
+
+  }
+
+  searchForDelete(searchValue:string){
+    return this.http.get('searchForDelete/' + searchValue);
   }
 }

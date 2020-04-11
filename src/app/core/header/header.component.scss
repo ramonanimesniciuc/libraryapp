@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Dancing+Script&display=swap');
+.mat-drawer-side{
+  border-right: none!important;
+}
 .header{
   font-family: Poppins-Regular;
   src: url('../../../app/login/login/fonts/poppins/Poppins-Regular.ttf');
-  background: linear-gradient(#badfdb, #fcf9ea);
+  background: transparent;
   min-height: 100px;
-  border-bottom: 1px solid #8a2303;
+  //border-bottom: 1px solid #8a2303;
   max-height: 158px;
   margin-top: -25px;
-  margin-left: 215px;
+  //margin-left: 215px;
  font-weight: bold;
   padding: 10px;
   z-index: -1;
@@ -24,7 +27,7 @@
     margin-top: 15px;
     //margin-left:10%;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 15px;
     padding: 30px;
 
   }
@@ -77,7 +80,7 @@
 .search {
   width: 60%;
   font-family: Poppins-Regular,sans-serif;
-  font-size: 22px;
+  font-size: 15px;
   position: relative;
   display: flex;
   margin-top:30px;

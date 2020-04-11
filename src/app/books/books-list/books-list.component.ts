@@ -16,7 +16,7 @@ export class BooksListComponent implements OnInit {
   private loading: boolean;
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private bookService: BooksService,
+              public bookService: BooksService,
               private cookieService: CookieService,
               private authService: AuthService) { }
 
@@ -70,6 +70,7 @@ export class BooksListComponent implements OnInit {
     this.bookService.filterBooksByLibrary(libraryId).subscribe(
     (books) => {
       this.books = books;
+      this.bookService.books = books;
       this.loading = false;
     },
     (error) => {
@@ -82,7 +83,8 @@ export class BooksListComponent implements OnInit {
     this.bookService.getBooks().subscribe(
       (books) => {
        this.books = books;
-       this.loading = false;
+      this.bookService.books = books;
+      this.loading=false;
        console.log(this.books);
       }
     );

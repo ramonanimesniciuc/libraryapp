@@ -4,7 +4,14 @@ import { BooksListComponent } from './books-list/books-list.component';
 import { RentBookComponent } from './rent-book/rent-book.component';
 import { BookCardComponent } from './book-card/book-card.component';
 import { BookViewComponent } from './book-view/book-view.component';
-import {MatButtonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatTableModule, MatTooltipModule
+} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ReserveBookComponent } from './reserve-book/reserve-book.component';
 import {MatSelectModule} from '@angular/material/select';
@@ -27,7 +34,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatTooltipModule
   ],
   entryComponents: [RentBookComponent, ReserveBookComponent],
   exports: [ BooksListComponent, MatDatepickerModule, RentBookComponent, MatInputModule, MatSelectModule, MatFormFieldModule, MatAutocompleteModule]

@@ -9,6 +9,7 @@ import {MatMenuModule} from '@angular/material';
 import {CookieService} from 'ngx-cookie-service';
 import { RedirectComponent } from './redirect/redirect.component';
 import { HttpService } from './http-service';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -26,6 +27,7 @@ import { HttpService } from './http-service';
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
+    FormsModule,
   ]
 })
 export class CoreModule { }

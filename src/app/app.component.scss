@@ -1,10 +1,17 @@
-.lo-container{
- margin-left: 240px;
-  text-align: center;
-  //padding-left: 10%;
-  min-height: 1090px;
-  background: linear-gradient(#fcf9ea, #badfdb);;
-  background-size: cover;
-  //opacity: 0.7;
+
+.grid-container {
+  background: linear-gradient(#fcf9ea, #badfdb);
+  display: grid;
+  grid-template-columns:0.6fr 1fr 1fr 1fr;
+  grid-template-rows:0.3fr 1fr 1fr 1fr;
+  gap: 1px 1px;
+  grid-template-areas: "Menu Header Header Header" "Menu Content Content Content" "Menu Content Content Content" "Footer Footer Footer Footer";
 }
 
+.Header { grid-area: Header; }
+
+.Content { grid-area: Content;min-height: 340px;text-align: center }
+
+.Menu { grid-area: Menu; }
+
+.Footer { grid-area: Footer; }

@@ -9,7 +9,7 @@ const nodemailer = require("nodemailer");
 const Op = Sequelize.Op;
 const sequelize = new Sequelize('libraryapp', 'root', '', {
   dialect : 'mysql',
-  port:3336,
+  port:3306,
   operatorsAliases: false,
   define:{
     timestamps:false
@@ -607,6 +607,55 @@ app.get('/users/:id',(req,res,next)=>{
     .then((user)=>res.status(200).json(user))
     .catch((Err)=>next(Err))
 })
+
+app.get('/search/:value',(req,res,next)=>{
+  // Books.findAll({where:{
+  //     [Op.or]:{ title: { [Op.like]: '%' + req.params.search + '%' }, first_name: { [Op.like]: '%' + req.params.search + '%'}}
+  //   }})
+  Authors.findAll({where:{name:{[Op.like]: '%' + req.params.value + '%'}}})
+    .then((authors)=>{
+      if(authors.length>0){
+        authors.forEach((author)=>{
+          Books.findAll({where:{AuthorId:author.id}})
+            .then((books)=>{
+              res.status(200).json({data:books})
+            })
+            .catch((Err)=>next(Err))
+        })
+      }else {
+        Books.findAll({where:{title:{[Op.like] : '%' + req.params.value + '%'}}})
+          .then((books)=>{
+            res.status(200).json({data:books})
+          })
+          .catch((Err)=>{
+            next(Err);
+          })
+      }
+    })
+});
+
+app.get('/searchForDelete/:value',(req,res,next)=>{
+  const booksToDelete=[];
+  Books.findAll({where:{title:{[Op.like] : '%' + req.params.value + '%'}}})
+    .then((books)=>{
+      if(books.length > 0){
+        books.forEach((book)=>{
+          BookCopies.findAll({where:{BookId: book.id},include:[{model:Libraries},{model:Books,include:Authors}]}).then((results)=>{
+            results.forEach((result)=>{
+              booksToDelete.push(result);
+            })
+          })
+        })
+        setTimeout(()=>{
+          res.status(200).json({data:booksToDelete});
+        },1500);
+      }else{
+        res.status(200).json({data:'NO BOOKS FOUNDED FOR YOUR SEARCH!'})
+      }
+    }).catch((err)=>{
+      next(err);
+  })
+});
 
 
 

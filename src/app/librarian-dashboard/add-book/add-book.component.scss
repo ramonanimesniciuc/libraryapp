@@ -135,3 +135,38 @@ form{
 button:disabled{
   background: darkgrey!important;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 1px 1px;
+  grid-template-areas: "title title author category" "pages date ranting choose" "stock publish description description" "preview preview uploaded uploaded" ". add-copies add-copies ." "copy copy copy copy";
+}
+
+.title { grid-area: title; }
+
+.author { grid-area: author; }
+
+.category { grid-area: category; }
+
+.pages { grid-area: pages; }
+
+.date { grid-area: date; }
+
+.ranting { grid-area: ranting; }
+
+.choose { grid-area: choose; }
+
+.stock { grid-area: stock; }
+
+.publish { grid-area: publish; }
+
+.description { grid-area: description; }
+
+.preview { grid-area: preview; }
+
+.uploaded { grid-area: uploaded; }
+
+.add-copies { grid-area: add-copies; }
+
+.copy { grid-area: copy; }

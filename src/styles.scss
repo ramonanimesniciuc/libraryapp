@@ -14,7 +14,10 @@ body{
   font-family: Poppins-Regular;
   src: url('./app/login/login/fonts/poppins/Poppins-Regular.ttf');
 }
-
+footer{
+  font-family: Poppins-Regular;
+  src: url('./app/login/login/fonts/poppins/Poppins-Regular.ttf');
+}
 .lo-container{
   margin-bottom: 0;
 }
@@ -29,5 +32,40 @@ table{
   }
 }
 .mat-form-field-appearance-legacy .mat-form-field-infix{
-  font-size: 22px;
+  font-size: 15px;
+}
+
+.example-sidenav{
+  bottom: 7vh!important;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* background: #888;*/
+  border-radius: 6rem;
+  background-color: rgba(250, 130, 32, 0.6);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  /*background: #555;*/
+  border-radius: 6rem;
+  background-color: rgba(219, 161, 37, 0.8);
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  text-align: center!important;
+}
+
+.mat-drawer-inner-container{
+  width: 47%!important;
 }
