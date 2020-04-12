@@ -135,38 +135,54 @@ form{
 button:disabled{
   background: darkgrey!important;
 }
+
 .grid-container {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+   gap:5px 5px;
+   grid-template-areas: ". title title ." ". category author ." ". choose choose ." ". pages stock ." ". rating publish ." ". date date ." ". description description ." ;
+ }
+
+.grid-container-copy {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 1px 1px;
-  grid-template-areas: "title title author category" "pages date ranting choose" "stock publish description description" "preview preview uploaded uploaded" ". add-copies add-copies ." "copy copy copy copy";
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr  ;
+  gap:5px 5px;
+  grid-template-areas: ". name biblioteque status comment ."  ;
 }
 
-.title { grid-area: title; }
+.name{
+  grid-area:name;
+}
 
-.author { grid-area: author; }
+.comment{
+  grid-area:comment;
+}
+
+.status{
+  grid-area:status;
+}
+
+.biblioteque{
+  grid-area:biblioteque;
+}
+.title { grid-area: title; }
 
 .category { grid-area: category; }
 
-.pages { grid-area: pages; }
-
-.date { grid-area: date; }
-
-.ranting { grid-area: ranting; }
+.author { grid-area: author; }
 
 .choose { grid-area: choose; }
 
+.pages { grid-area: pages; }
+
 .stock { grid-area: stock; }
+
+.rating { grid-area: rating; }
 
 .publish { grid-area: publish; }
 
+.date { grid-area: date; }
+
 .description { grid-area: description; }
-
-.preview { grid-area: preview; }
-
-.uploaded { grid-area: uploaded; }
-
-.add-copies { grid-area: add-copies; }
-
-.copy { grid-area: copy; }

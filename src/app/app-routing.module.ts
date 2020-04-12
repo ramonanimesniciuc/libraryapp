@@ -15,6 +15,7 @@ import {CreateUserAccountComponent} from './librarian-dashboard/create-user-acco
 import {CheckRentsComponent} from './librarian-dashboard/check-rents/check-rents.component';
 import {DeleteBookComponent} from './books/delete-book/delete-book.component';
 import {ContactComponent} from './user/contact/contact.component';
+import {StatisticsComponent} from './librarian-dashboard/statistics/statistics.component';
 
 
 
@@ -32,7 +33,8 @@ const routes: Routes = [
   {path: 'delete-book', component: DeleteBookComponent},
   {path: 'my-profile', component: MemberComponent, canActivate: [AuthGuard]},
   {path: 'rent-book', component: LendBookComponent, canActivate: [AuthGuard]},
-  {path: 'contact', component: ContactComponent, canActivate: [AuthGuard]}
+  {path: 'contact', component: ContactComponent, canActivate: [AuthGuard]},
+  {path: 'reports', component: StatisticsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

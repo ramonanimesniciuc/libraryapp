@@ -47,12 +47,14 @@ export class LendBookComponent implements OnInit {
 
      this.booksService.rentABook(this.rent).subscribe(
        (success) => {
+         console.log(success);
          this.notification.success('Book Rented!');
-         this.selectedBook='';
-         this.userSelected='';
-         this.startDate='';
-         this.endDate='';
-         this.filteredBooks=[];
+         this.selectedBook = '';
+         this.userSelected = '';
+         this.startDate = '';
+         this.endDate = '';
+         this.bookInput = '';
+         this.filteredBooks = [];
          this.getBooksByLocation();
        },
        (err) => {
@@ -95,7 +97,7 @@ export class LendBookComponent implements OnInit {
   searchBook() {
     this.filteredBooks = [];
     this.possibleBooks.forEach((book) => {
-     if (book.title.includes(this.bookInput)) {
+     if (book.title.toLowerCase().includes(this.bookInput.toLowerCase())) {
        this.filteredBooks.push(book);
      }
    });

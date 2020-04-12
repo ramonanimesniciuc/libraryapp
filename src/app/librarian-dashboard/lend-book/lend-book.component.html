@@ -15,9 +15,9 @@
   <div class="row" >
     <h1>2.</h1>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Book" aria-label="Book" [(ngModel)]="bookInput">
+      <input matInput (keyup.enter)="searchBook()" placeholder="Book" aria-label="Book" [(ngModel)]="bookInput">
     </mat-form-field>
-    <i class="fas fa-search" (click)="searchBook()" ></i>
+    <i class="fas fa-search"  (click)="searchBook()" ></i>
   </div>
   <div class="row" *ngIf="filteredBooks.length>0">
     <div class="col-md-12 booksFiltered" *ngFor="let filterbook of filteredBooks">

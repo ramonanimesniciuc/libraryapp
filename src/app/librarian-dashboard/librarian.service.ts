@@ -23,4 +23,16 @@ return this.http.post('users', newUser);
   returnBook(rentedBook:any) {
     return this.http.post('returnBook', rentedBook);
   }
+
+  getReportOnRentedBooked(){
+    return this.http.get('rentedbookdayreport');
+  }
+
+  getLibrariesNames(){
+    return this.http.get('getLibrariesByName');
+  }
+
+  getReportOnCurrentStatus(librarianId: number){
+    return this.http.get('currentStatus/' + librarianId);
+  }
 }

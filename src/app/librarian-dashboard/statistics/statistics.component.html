@@ -1,0 +1,23 @@
+<div>
+  <h1>Number of rented/reserved books on our biblioteques</h1>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+  </div>
+</div>
+<div>
+ <h1> Current status of books in this library</h1>
+  <div style="display: block">
+    <canvas baseChart
+            [options]="doughnutChartOptions"
+            [data]="doughnutChartData"
+            [legend]="true"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"></canvas>
+  </div>
+</div>

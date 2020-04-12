@@ -10,17 +10,20 @@ import { CreateUserAccountComponent } from './create-user-account/create-user-ac
 import { CheckRentsComponent } from './check-rents/check-rents.component';
 import {RentModule} from '../rent/rent.module';
 import { ConfirmReturnComponent } from './confirm-return/confirm-return.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
-  declarations: [LendBookComponent, ReceiveBookBackComponent, AddBookComponent, CreateUserAccountComponent, CheckRentsComponent, ConfirmReturnComponent],
+  declarations: [LendBookComponent, ReceiveBookBackComponent, AddBookComponent, CreateUserAccountComponent, CheckRentsComponent, ConfirmReturnComponent, StatisticsComponent],
   imports: [
     CommonModule,
     BooksModule,
     FormsModule,
     RentModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    ChartsModule
   ],
   entryComponents:[ConfirmReturnComponent]
 })

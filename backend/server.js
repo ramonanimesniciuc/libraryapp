@@ -413,7 +413,7 @@ app.get('/booksByLibrary/:id',(req,res,next)=>{
 });
 
 app.get('/booksByLibraryAvailable/:id',(req,res,next)=>{
-  BookCopies.findAll({where:{LibraryId:req.params.id,bookStatusId:1},include:[{model:Books,include:[{model:Authors}]}]})
+  BookCopies.findAll({where:{LibraryId:req.params.id,bookStatusId:3},include:[{model:Books,include:[{model:Authors}]}]})
     .then((books)=>{
       let officialBooks=[];
       books.forEach((b)=>{
@@ -487,7 +487,7 @@ app.post('/bookit',(req,res,next)=>{
 app.post('/rents',(req,res,next)=>{
   RentedBooks.create(req.body)
     .then((success)=>{
-      BookCopies.update({bookStatusId:4},{where:{id:req.body.bookCopyId}})
+      BookCopies.update({bookStatusId:1},{where:{id:req.body.bookCopyId}})
         .then((success)=>res.status(201).send({message:'Your copy is rented!'}))
     })
     .catch((err)=>{
@@ -657,6 +657,71 @@ app.get('/searchForDelete/:value',(req,res,next)=>{
   })
 });
 
+app.get('/rentedbookdayreport',(req,res,next)=>{
+  let mostRentedLibraries=[0,0,0,0,0,0];
+  let mostBookedLibraries=[0,0,0,0,0,0];
+RentedBooks.findAll()
+  .then((rentedbooks)=>{
+    rentedbooks.forEach((rentedBook)=>{
+      BookCopies.findOne({where:{id:rentedBook.bookCopyId}})
+        .then((bookCopy)=>{
+          mostRentedLibraries[bookCopy.LibraryId]++;
+        })
+    })
+  })
+  ReservedBooks.findAll().then((reservedBooks)=>{
+    reservedBooks.forEach((reservedBook)=>{
+     BookCopies.findOne({where:{id:reservedBook.bookCopyId}}).then((copy)=>{
+       mostBookedLibraries[copy.LibraryId]++;
+     })
+    })
+  })
+  setTimeout(()=>{
+    res.status(200).json({data1:mostRentedLibraries,data2:mostBookedLibraries});
+  },1500);
+})
+
+app.get('/getLibrariesByName',(req,res,next)=>{
+  let libraryNames=[];
+  Libraries.findAll().then((libraries)=>{
+    libraries.forEach((library)=>{
+      libraryNames.push(library.name);
+    });
+    setTimeout(()=>{
+      res.status(200).json({data:libraryNames});
+    },1300);
+  })
+    .catch((Err)=>{next(Err)})
+})
+
+
+app.get('/currentStatus/:librarianId',(req,res,next)=>{
+  let data=[0,0,0];
+  console.log(req.params);
+  librarians.findOne({where:{id:req.params.librarianId}}).then((librarian)=>{
+    if(librarian){
+      console.log(librarian);
+      Libraries.findOne({where:{id:librarian.LibraryId}}).then((library)=>{
+        BookCopies.findAll({where:{LibraryId:library.id}}).then((books)=>{
+          books.forEach((book)=>{
+            if(book.bookStatusId===1){
+              data[0]++;
+            }else if(book.bookStatusId===2){
+              data[1]++;
+            }else{
+              data[2]++;
+            }
+          })
+        })
+      })
+
+    }
+    setTimeout(()=>{
+      res.status(200).json({results:data});
+    },1500);
+
+  })
+})
 
 
 app.listen('3030',()=>{

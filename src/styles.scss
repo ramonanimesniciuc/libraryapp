@@ -66,6 +66,46 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
   text-align: center!important;
 }
 
-.mat-drawer-inner-container{
-  width: 47%!important;
+//.mat-drawer-inner-container{
+//  width: 47%!important;
+//}
+
+.example-sidenav{
+  width: 16%!important;
+}
+@media screen and (max-width: 600px) {
+  h1{
+    font-size: 22px!important;
+  }
+
+ .mat-form-field{
+   width: 170px!important;
+ }
+  button{
+    width: 100px!important;
+  }
+
+  .example-sidenav{
+    width: 30%!important;
+    img{
+      width: 30%!important;
+    }
+  }
+
+  .search{
+    width: 115%!important;
+  }
+
+  app-footer{
+    font-size: 15px!important;
+    p{
+      font-size: 12px!important;
+      letter-spacing: 2px!important;
+      padding: 5px!important;
+    }
+  }
+
+  .wrap-login100-form-btn{
+    width: 70%!important;
+  }
 }

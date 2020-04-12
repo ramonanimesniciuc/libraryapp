@@ -20,6 +20,7 @@ import {LibrarianDashboardModule} from './librarian-dashboard/librarian-dashboar
 import {HttpClientModule} from '@angular/common/http';
 import {OnlyDate} from './shared/pipes/onlyDate.pipe';
 import {SharedModule} from './shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import {SharedModule} from './shared/shared.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ChartsModule,
     CoreModule,
     HttpClientModule,
     SimpleNotificationsModule.forRoot(),
