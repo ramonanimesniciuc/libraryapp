@@ -119,3 +119,10 @@ ul.social-network li {
 .social-network a {
   background-color: #F9F9F9;
 }
+@media screen and (max-width: 900px) {
+  footer{
+    height: 35px;
+    font-size: 10px!important;
+   .copy{ padding: 4px;}
+  }
+}

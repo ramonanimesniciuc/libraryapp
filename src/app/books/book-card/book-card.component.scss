@@ -45,7 +45,7 @@
 
 .book p {
   margin-top: 12px;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .book .author {
@@ -82,4 +82,13 @@ h1 {
 }
 .fa-star{
   color:gold;
+}
+@media screen and (max-width: 900px) {
+  .book{
+    width: 70%;
+    height: 68%;
+  }
+  .cover{
+    height: 48%;
+  }
 }

@@ -19,25 +19,27 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CoreModule} from '../core/core.module';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
   declarations: [BooksListComponent, RentBookComponent, BookCardComponent, BookViewComponent, ReserveBookComponent, DeleteBookComponent],
-  imports: [
-    MatSelectModule,
-    CommonModule,
-    MatDatepickerModule,
-    MatAutocompleteModule,
-    FormsModule,
-    MatProgressSpinnerModule,
-    CoreModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatButtonModule,
-    MatTableModule,
-    MatTooltipModule
-  ],
+    imports: [
+        MatSelectModule,
+        CommonModule,
+        MatDatepickerModule,
+        MatAutocompleteModule,
+        FormsModule,
+        MatProgressSpinnerModule,
+        CoreModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatInputModule,
+        MatButtonModule,
+        MatTableModule,
+        MatTooltipModule,
+        SharedModule
+    ],
   entryComponents: [RentBookComponent, ReserveBookComponent],
   exports: [ BooksListComponent, MatDatepickerModule, RentBookComponent, MatInputModule, MatSelectModule, MatFormFieldModule, MatAutocompleteModule]
 })

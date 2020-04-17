@@ -11,4 +11,12 @@ export class RentsUserService {
   getUserHistory(userId: any) {
     return this.http.get('rents-history/' + userId);
   }
+
+  getRentsByToday(userId:any){
+    return this.http.get('rentedBooksTillToday/' + userId);
+  }
+
+  pay(payment:any){
+    return this.http.post('pay',payment);
+  }
 }

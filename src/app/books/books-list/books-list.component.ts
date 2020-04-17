@@ -14,6 +14,8 @@ export class BooksListComponent implements OnInit {
   private locations: any;
   private response: any;
   private loading: boolean;
+  public paginationNo:any[];
+  public selectedPage:number = 1;
   constructor(private router: Router,
               private route: ActivatedRoute,
               public bookService: BooksService,
@@ -22,6 +24,7 @@ export class BooksListComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.cookieService.get('userLogged'));
+    this.paginationNo=[];
     const book = {
       author: 'string',
       cover: 'string',
@@ -33,7 +36,7 @@ export class BooksListComponent implements OnInit {
       stock: 0,
       title: 'string'
     };
-
+    this.getBooksNumber();
     this.getBooks();
     this.getLibraries();
   }
@@ -80,17 +83,38 @@ export class BooksListComponent implements OnInit {
   }
   getBooks() {
     this.loading = true;
-    this.bookService.getBooks().subscribe(
+    this.bookService.getBooks(this.selectedPage).subscribe(
       (books) => {
        this.books = books;
       this.bookService.books = books;
+      console.log(Math.round(this.bookService.books.length/6));
       this.loading=false;
        console.log(this.books);
+
       }
     );
   }
 
   //
+
+  goToPag(pagNo:number){
+this.selectedPage = pagNo;
+console.log(document.getElementsByClassName('page-item'));
+   for(let i=0;i< document.getElementsByClassName('page-item').length;i++)
+   {
+     document.getElementsByClassName('page-item')[i].classList.remove('active');
+   }
+    document.getElementsByClassName('page-item')[pagNo-1].classList.add('active');
+this.getBooks();
+  }
+
+  getBooksNumber(){
+    this.bookService.getbooksNumber().subscribe(result=>{
+      for(let i=0;i<result.number/6;i++){
+        this.paginationNo.push(i+1);
+      }
+    })
+  }
   getLibraries() {
     this.bookService.getLibraries().subscribe(
       (libraries) => {

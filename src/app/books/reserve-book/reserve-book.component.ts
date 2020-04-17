@@ -61,7 +61,7 @@ export class ReserveBookComponent implements OnInit {
     };
     this.booksService.bookABook(booked).subscribe(
       (succes) => {
-        this.notifications.success(succes);
+        this.notifications.success(succes.message);
         this.dialogRef.close();
       },
       (error) => {

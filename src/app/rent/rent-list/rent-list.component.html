@@ -1,5 +1,6 @@
 <script src="../../../../../../../Downloads/only-date-fr.pipe.ts"></script>
 <div class="rented-books-table">
+  <h2>You've rented {{dataSource.length}} books till today.</h2>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
@@ -7,30 +8,30 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 28px; font-family: 'Hepta Slab', serif;text-align: center"> Title</th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;background: #c96550;color: #fcf9ea;font-size: 24px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.bookCopy?element.bookCopy.book.title:''}} </td>
+      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 15px; font-family: 'Hepta Slab', serif;text-align: center"> Title</th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;background: #c96550;color: #fcf9ea;font-size: 14px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.bookCopy?element.bookCopy.book.title:''}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="startDate">
-      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 28px; font-family: 'Hepta Slab', serif;text-align: center"> Rent start date </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 24px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.startDate | onlyDate}} </td>
+      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 15px; font-family: 'Hepta Slab', serif;text-align: center"> Rent start date </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 14px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.startDate | onlyDate}} </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="endDate">
-      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 28px; font-family: 'Hepta Slab', serif;text-align: center"> Rent end date </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 24px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.endDate | onlyDate}} </td>
+      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 15px; font-family: 'Hepta Slab', serif;text-align: center"> Rent end date </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 14px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.endDate | onlyDate}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="condition">
-      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 28px; font-family: 'Hepta Slab', serif;text-align: center"> Book condition </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 24px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.comment}} </td>
+      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 15px; font-family: 'Hepta Slab', serif;text-align: center"> Book condition </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 14px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.comment}} </td>
     </ng-container>
     <ng-container matColumnDef="extraPayment">
-      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 28px; font-family: 'Hepta Slab', serif;text-align: center"> Extra payment </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 24px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.paymentExtra}} RON</td>
+      <th mat-header-cell *matHeaderCellDef style="background: #badfdb;color: #8a2303;font-size: 15px; font-family: 'Hepta Slab', serif;text-align: center"> Extra payment </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;background: #ff9457;color: #188694;font-size: 14px;font-family: 'Hepta Slab', serif;text-align: center"> {{element.paymentExtra}} RON <span (click)="payNow(element)" class="payment" *ngIf="element.paymentExtra>0">Pay now</span> </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -38,4 +39,6 @@
   </table>
 
 </div>
+
+
 

@@ -7,6 +7,9 @@ const mysql=require('mysql2');
 const cors = require('cors');
 const nodemailer = require("nodemailer");
 const Op = Sequelize.Op;
+const stripeSecretKey='sk_test_IkdHHlAn9a3MtPPBF90dkXAU00zcQU5fdU';
+const stripePublicKey='pk_test_8CUCodwDZ1mIUcAIjfz7R6n900mIRWpx7T';
+const stripe = require('stripe')(stripeSecretKey);
 const sequelize = new Sequelize('libraryapp', 'root', '', {
   dialect : 'mysql',
   port:3306,
@@ -39,13 +42,11 @@ app.use(bodyParser.json({limit:'100mb'}));
 
 //EMAIL PART
 const transport = {
-  service:'gmail',
+  host: "smtp.mailtrap.io",
+  port: 2525,
   auth: {
-    user: 'ramorra30@gmail.com',
-    pass: 'Umbrella25**'
-  },
-  tls: {
-    rejectUnauthorized: false
+    user: "c95605d23b0366",
+    pass: "3e1390801ca6da"
   }
 };
 
@@ -305,7 +306,8 @@ app.post('/login-librarian',(req,res,next)=>{
     .then((librarian)=>res.status(200).json(librarian))
     .catch((err)=>next(err))
 });
-app.get('/books',(req,res,next)=>{
+app.get('/books/page/:id',(req,res,next)=>{
+  console.log(req.params.page);
   Books.findAll({
     include:[
       {
@@ -317,19 +319,28 @@ app.get('/books',(req,res,next)=>{
       {
         model:Categories
       }
-    ]
+    ],
+    offset:(req.params.id -1)*6,
+    limit:6
     }
   )
     .then((books)=>res.status(200).json(books))
     .catch((err)=>next(err))
 });
 
+app.get('/getbooksno',(req,res,next)=>{
+  Books.findAll().then((books)=>{
+    res.status(200).json({'number': books.length});
+  })
+})
 
 app.get('/reservedTypes',(req,res,next)=>{
   ReservedTypes.findAll()
     .then((types)=>res.status(200).json(types))
     .catch((err)=>next(err))
 });
+
+
 app.post('/bookCopies',(req,res,next)=>{
   const copies=req.body;
   console.log(req.body);
@@ -438,7 +449,7 @@ app.get('/booksByLibraryAvailable/:id',(req,res,next)=>{
 });
 
 app.get('/copies/:id',(req,res,next)=>{
-  BookCopies.findAll({where:{bookId:req.params.id, [Op.or]: [{bookStatusId: 1}, {bookStatusId: 2}]},include:[{model:Libraries}]})
+  BookCopies.findAll({where:{bookId:req.params.id, [Op.or]: [{bookStatusId: 1}, {bookStatusId: 1}]},include:[{model:Libraries}]})
     .then((books)=>res.status(200).json(books))
     .catch((err)=>next(err))
 });
@@ -476,8 +487,8 @@ app.get('/bookStatuses',(req,res,next)=>{
 app.post('/bookit',(req,res,next)=>{
   ReservedBooks.create(req.body)
     .then((success)=>{
-      BookCopies.update({bookStatusId:3},{where:{id:req.body.bookCopyId}})
-        .then((success)=>res.status(201).send('Your copy is booked'))
+      BookCopies.update({bookStatusId:2},{where:{id:req.body.bookCopyId}})
+        .then((success)=>res.status(201).send({message:'Your copy is booked'}))
     })
     .catch((err)=>{
       next(err);
@@ -487,7 +498,7 @@ app.post('/bookit',(req,res,next)=>{
 app.post('/rents',(req,res,next)=>{
   RentedBooks.create(req.body)
     .then((success)=>{
-      BookCopies.update({bookStatusId:1},{where:{id:req.body.bookCopyId}})
+      BookCopies.update({bookStatusId:3},{where:{id:req.body.bookCopyId}})
         .then((success)=>res.status(201).send({message:'Your copy is rented!'}))
     })
     .catch((err)=>{
@@ -498,7 +509,7 @@ app.post('/rents',(req,res,next)=>{
 app.get('/rents/:id',(req,res,next)=>{
   RentedBooks.findAll({include:
       [{model:User},
-        {model:librarians,where:{id:{[Op.ne]:2}}},
+        {model:librarians,where:{id:{[Op.ne]:1}}},
         {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses},{model:Libraries}]}]})
     .then((rents)=>res.status(200).json(rents))
     .catch((err)=>next(err))
@@ -507,7 +518,7 @@ app.get('/rents/:id',(req,res,next)=>{
 app.get('/rentsbyusers/:id',(req,res,next)=>{
   RentedBooks.findAll({include:
       [{model:User},
-        {model:librarians,where:{id:{[Op.between]:[2,522]}}},
+        {model:librarians,where:{id:{[Op.between]:[1,522]}}},
         {model:BookCopies,where:{LibraryId:req.params.id},include:[{model:Books},{model:BookStatuses},{model:Libraries}]}]})
     .then((rents)=>res.status(200).json(rents))
     .catch((err)=>next(err))
@@ -536,6 +547,7 @@ app.post('/returnBook',(req,res,next)=>{
             .then((success)=>{
              Notifications.findAll({where:{UserId:req.body.rentedBook.UserId,bookId:req.body.rentedBook.bookId}})
                .then((notifs)=>{
+                 console.log(notifs);
                  if(notifs.length>0){
                    let name = 'Notification: book is back!';
                    let email = 'Biblioteque@gmail.com';
@@ -564,6 +576,8 @@ app.post('/returnBook',(req,res,next)=>{
                          .catch((err)=>next(err))
                      }
                    });
+                   res.status(201).json({message:'Book returned!Check user history!'})
+                 }else{
                    res.status(201).json({message:'Book returned!Check user history!'})
                  }
                })
@@ -640,7 +654,7 @@ app.get('/searchForDelete/:value',(req,res,next)=>{
     .then((books)=>{
       if(books.length > 0){
         books.forEach((book)=>{
-          BookCopies.findAll({where:{BookId: book.id},include:[{model:Libraries},{model:Books,include:Authors}]}).then((results)=>{
+          BookCopies.findAll({where:{BookId: book.id,bookStatusId:1},include:[{model:Libraries},{model:Books,include:Authors}]}).then((results)=>{
             results.forEach((result)=>{
               booksToDelete.push(result);
             })
@@ -722,6 +736,27 @@ app.get('/currentStatus/:librarianId',(req,res,next)=>{
 
   })
 })
+
+app.get('/rentedBooksTillToday/:id',(req,res,next)=>{
+  RentedBooks.findAll({where:{UserId:req.params.id}}).then((rentedBooks)=>{
+    res.status(200).json({data:rentedBooks.length});
+  })
+})
+
+app.post('/pay',(req,res,next)=>{
+  stripe.charges.create({
+    amount: req.body.total,
+    source: req.body.stripeTokenId,
+    currency: 'usd'
+  }).then(function() {
+    console.log('Charge Successful')
+    res.json({ message: 'Successfully  payed the debt!' })
+  }).catch(function() {
+    console.log('Charge Fail')
+    res.status(500).end()
+  })
+})
+
 
 
 app.listen('3030',()=>{

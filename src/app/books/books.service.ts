@@ -22,11 +22,15 @@ export class BooksService {
     return this.http.get('libraries');
   }
 
-  getBooks() {
-    return this.http.get('books');
+  getBooks(page:any) {
+    return this.http.get('books/page/' +page);
   }
   postBook(book: any) {
     return this.http.post('books', book);
+  }
+
+  getbooksNumber(){
+    return this.http.get('getbooksno');
   }
 
   getAuthors() {

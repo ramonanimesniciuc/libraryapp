@@ -32,12 +32,12 @@ rentBook() {
       startDate: this.startDate,
       endDate: this.endDate,
       UserId: this.cookieService.get('userDetails'),
-      LibrarianId: '2',
+      LibrarianId: '1',
       bookCopyId: this.selectedCopy
     };
     this.booksService.rentABook(rent).subscribe(
       (success) => {
-        this.notifications.success(success);
+        this.notifications.success(success.message);
         this.dialogRef.close();
       },
       (error) => {

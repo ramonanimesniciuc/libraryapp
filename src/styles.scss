@@ -26,7 +26,7 @@ table{
   font-weight: bold;
   thead{
     th{
-      font-size: 28px;
+      font-size: 15px!important;
     }
 
   }
@@ -81,6 +81,42 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
  .mat-form-field{
    width: 170px!important;
  }
+  button{
+    width: 100px!important;
+  }
+
+  .example-sidenav{
+    width: 30%!important;
+    img{
+      width: 30%!important;
+    }
+  }
+
+  .search{
+    width: 115%!important;
+  }
+
+  app-footer{
+    font-size: 15px!important;
+    p{
+      font-size: 12px!important;
+      letter-spacing: 2px!important;
+      padding: 5px!important;
+    }
+  }
+
+  .wrap-login100-form-btn{
+    width: 70%!important;
+  }
+}
+@media screen and (min-width: 601px) and (max-width: 800) {
+  h1{
+    font-size: 22px!important;
+  }
+
+  .mat-form-field{
+    width: 170px!important;
+  }
   button{
     width: 100px!important;
   }

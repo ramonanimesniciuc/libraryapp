@@ -3,11 +3,13 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {OnlyDate} from './pipes/onlyDate.pipe';
+import {SafeHtml} from "./pipes/safeHtml.pipe";
 
 
 @NgModule({
   declarations: [
-OnlyDate
+OnlyDate,
+    SafeHtml
   ],
   imports: [
 
@@ -16,7 +18,7 @@ OnlyDate
 
   ],
   exports: [
-OnlyDate
+OnlyDate,SafeHtml
   ],
   entryComponents: [
   ]

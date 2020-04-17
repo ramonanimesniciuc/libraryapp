@@ -52,6 +52,7 @@ this.bookService.getBookById(this.bookId).subscribe(
       data: {bookId, hasNotifications: this.hasNotifications}
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.getBookCopies();
 
     });
   }
@@ -62,6 +63,7 @@ this.bookService.getBookById(this.bookId).subscribe(
       data: {bookId: this.bookId, copies: this.copies , hasNotifications: this.hasNotifications}
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.getBookCopies();
 
     });
   }

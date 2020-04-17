@@ -24,6 +24,10 @@ app-book-card{
   color: gray;
   float: right;
 }
+
+#pagination{
+  float:right!important;
+}
 /******************************************
 Book stuff
 *******************************************/
@@ -120,4 +124,11 @@ zoom on click
   to {
     transform: translateY(-15px);
   }
+}
+
+@media screen and (max-width: 900px) {
+  .landing{
+    width: 80%;
+  }
+
 }
