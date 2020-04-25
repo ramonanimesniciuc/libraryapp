@@ -1,5 +1,6 @@
 
 
+
 const express=require('express');
 const bodyParser=require('body-parser')
 const Sequelize = require('sequelize')
@@ -229,6 +230,12 @@ const ReservedTypes=sequelize.define('reservedType' , {
 const ReservedBooks=sequelize.define('reservedBooks',{
   payment_accepted:{
     type:Sequelize.BOOLEAN
+  },
+  createdAt:{
+  type:Sequelize.DATE
+},
+  startedHour:{
+    type: Sequelize.STRING
   }
 })
 
@@ -339,6 +346,22 @@ app.get('/reservedTypes',(req,res,next)=>{
     .then((types)=>res.status(200).json(types))
     .catch((err)=>next(err))
 });
+
+app.get('/reservedBooksByLibrary/:libraryId',(req,res,next)=>{
+  let array=[];
+  ReservedBooks.findAll({include:[{model:BookCopies,include:[{model:Books}]},{model:User}]}).then((success)=>{
+    success.forEach((book)=>{
+    console.log( (new Date() -  (new Date(book.createdAt)))/(1000*60*60*24));
+      if(book.bookCopy.LibraryId===parseInt(req.params.libraryId,2)  && (new Date() -  (new Date(book.createdAt)))/(1000*60*60*24) < 1){
+        array.push(book);
+        console.log('here');
+      }
+    })
+   setTimeout(()=>{
+     res.status(200).json({data:array});
+   },2000);
+  })
+})
 
 
 app.post('/bookCopies',(req,res,next)=>{
@@ -466,6 +489,18 @@ app.get('/authors',(req,res,next)=>{
     .catch((err)=>next(err))
 });
 
+app.post('/authors',(req,res,next)=>{
+  Authors.create(req.body).then((success)=>{
+    res.status(201).json({message:'Author added!'});
+  })
+})
+
+app.delete('/bookcopies/:id',(req,res,next)=>{
+  BookCopies.destroy({where:{id:req.params.id}}).then((success)=>{
+    res.status(200).json({message:'Book copy deleted!'})
+  })
+})
+
 app.get('/categories',(req,res,next)=>{
   Categories.findAll()
     .then((categories)=>res.status(200).json(categories))
@@ -576,7 +611,7 @@ app.post('/returnBook',(req,res,next)=>{
                          .catch((err)=>next(err))
                      }
                    });
-                   res.status(201).json({message:'Book returned!Check user history!'})
+                   // res.status(201).json({message:'Book returned!Check user history!'})
                  }else{
                    res.status(201).json({message:'Book returned!Check user history!'})
                  }
@@ -743,19 +778,84 @@ app.get('/rentedBooksTillToday/:id',(req,res,next)=>{
   })
 })
 
-app.post('/pay',(req,res,next)=>{
+app.post('/pay/:id',(req,res,next)=>{
   stripe.charges.create({
     amount: req.body.total,
     source: req.body.stripeTokenId,
     currency: 'usd'
   }).then(function() {
     console.log('Charge Successful')
-    res.json({ message: 'Successfully  payed the debt!' })
-  }).catch(function() {
-    console.log('Charge Fail')
+    UserHistory.update({paymentExtra:0},{where:{id:req.params.id}}).then((success)=>{
+      res.json({ message: 'Successfully  payed the debt!' })
+    })
+  }).catch(function(eerr) {
+    console.log(eerr)
     res.status(500).end()
   })
 })
+app.post('/pay-reservation',(req,res,next)=>{
+  stripe.charges.create({
+    amount: req.body.total,
+    source: req.body.stripeTokenId,
+    currency: 'usd'
+  }).then(function() {
+    console.log('Charge Successful')
+res.status(200).json({message:'Payment succesfull!'})
+  }).catch(function(eerr) {
+    console.log(eerr)
+    res.status(500).end()
+  })
+})
+app.get('/checkpayment/:id',(req,res,next)=>{
+  UserHistory.findAll({where:{UserId:req.params.id,paymentExtra:{[Op.gt]:0}}}).then((results)=>{
+    res.status(200).json({data:results});
+  })
+})
+
+app.post('/changereservationstatus/:id',(req,res,next)=>{
+  ReservedBooks.destroy({where:{id:req.params.id}}).then(()=>{
+    RentedBooks.create(req.body).then((success)=>{
+     BookCopies.update({bookStatusId:3},{where:{id:req.body.bookCopyId}}).then((success)=>{
+       res.status(201).json({message:'Book rented now!'})
+     })
+
+    })
+  })
+})
+
+app.get('/deletereservation/:id',(req,res,next)=>{
+  ReservedBooks.destroy({where:{id:req.params.id}}).then(()=>{
+    res.status(200).json({message:'Reservation deleted!'});
+  })
+})
+
+app.get('/notifyreturn/:rentId',(req,res,next)=>{
+  RentedBooks.findAll({where:{id:req.params.rentId},include:[{model:BookCopies,include:[{model:Books}]}]}).then((rents)=>{
+    let name = 'Notification: Book must be returned!';
+    let email = 'Biblioteque@gmail.com';
+    let message ='You need to return the book as fast as you can or you will have to pay for keeping the book extra .';
+    let content = `name: ${name} \n email: ${email} \n message: ${message} `;
+    console.log(rents[0]);
+    let mail = {
+      from: name,
+      to: 'nimesniciucramona15@stud.ase.ro',
+      subject: 'Please return the book!',
+      text: content,
+      html:`<h1 style="letter-spacing: 3px;font-family: 'Dancing Script', cursive;">Book ${rents[0].bookCopy.book.title} needs to be returned!</h1>
+<h2 style="letter-spacing: 3px;font-family: 'Dancing Script', cursive;">We expect you to our biblioteque to return it.</h2>
+<img src="http://www.annpurnattcollege.com/Uploads/fileupload/391books-1-1024x417.jpg">`
+    };
+    transporter.sendMail(mail, (err, data) => {
+      if (err) {
+        res.json({
+          msg: 'fail'
+        })
+      } else {
+        res.status(200).json({message:'Mail sent!',data:rents[0]})
+      }
+  })
+})
+  });
 
 
 

@@ -1,0 +1,28 @@
+.reservedBook{
+
+
+  .fa-dice:hover{
+    color:darkgreen;
+  }
+  .fa-minus-square:hover{
+    color:darkred;
+  }
+
+  border:1px dotted lightcoral;
+  padding: 10px;
+  background: lightblue;
+}
+
+.example-card{
+  font-size: 22px;
+  i{
+    padding: 5px;
+    background: white;
+    margin: 5px;
+  }
+  max-width: 500px;
+  max-height: 550px;
+  margin:auto;
+  margin-bottom: 5%;
+  display: block;
+}

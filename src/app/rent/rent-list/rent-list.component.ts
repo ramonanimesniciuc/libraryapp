@@ -1,6 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {RentsUserService} from '../rents-user.service';
 import {CookieService} from 'ngx-cookie-service';
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
   selector: 'app-rent-list',
@@ -15,6 +16,7 @@ export class RentListComponent implements OnInit {
 
 
   constructor(private rentsUserService: RentsUserService,
+              private notificationsService: NotificationsService,
               private cookieService: CookieService) { }
 
   ngOnInit() {
@@ -43,18 +45,23 @@ export class RentListComponent implements OnInit {
     let handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_8CUCodwDZ1mIUcAIjfz7R6n900mIRWpx7T',
       locale: 'auto',
+      currency:'ron',
       token: function (token: any) {
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
         console.log(token)
         const payment={total:rent.paymentExtra,stripeTokenId:token.id};
-        self.rentsUserService.pay(payment).subscribe((success)=>console.log(success));
+        self.rentsUserService.pay(rent.id,payment).subscribe((success)=>{
+          console.log(success);
+          self.notificationsService.success('Payment successfull!',null,{timeout:2000});
+          self.getHistory();
+        });
       }
     });
 
     handler.open({
-      name: 'Demo Site',
-      description: '2 widgets',
+      name: 'Biblioteque extra payment',
+      description: 'Payment register after return of books',
       amount: rent.paymentExtra * 100
     });
   }

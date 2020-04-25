@@ -54,6 +54,17 @@ export class CheckRentsComponent implements OnInit {
     );
   }
 
+  notifyReturn(rentId:any){
+this.librarianService.notifyReturn(rentId).subscribe((success)=>{
+  console.log(success);
+})
+  }
+
+  needsReturn(el:any){
+    console.log(el.endDate <= new Date());
+    return new Date(el.endDate) <= new Date();
+  }
+
   returnBook(book: any) {
     const dialogRef = this.dialog.open(ConfirmReturnComponent, {
       width: '700px',

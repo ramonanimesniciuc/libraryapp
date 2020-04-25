@@ -1,4 +1,8 @@
-<div class="rent-book-div">
+<div class="rent-book-div" *ngIf="hasPayments">
+  <h1>You have some payments to make.Check your history.</h1>
+</div>
+
+<div class="rent-book-div" *ngIf="!hasPayments">
   <mat-form-field class="col-md-6" *ngIf="copies.length!==0" >
     <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" placeholder="Choose a start date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -30,6 +34,6 @@
       </mat-select>
     </div>
   </div>
-  <button mat-button class="col-md-12" *ngIf="copies.length>0" (click)="rentBook()"><i class="fas fa-bookmark"></i>Rent book</button>
+  <button mat-button class="col-md-12"  *ngIf="copies.length>0" (click)="rentBook()"><i class="fas fa-bookmark"></i>Rent book</button>
 </div>
 

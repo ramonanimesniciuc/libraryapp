@@ -26,6 +26,9 @@
       <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
         <a href="/delete-book" mat-menu-item class="btn"><i class="fas fa-eraser"></i><span class="a-text">Book out</span></a>
       </div>
+      <div class="menu-item" *ngIf="cookieService.get('userLogged')==='librarian'">
+        <a href="/reserved-books" mat-menu-item class="btn"><i class="fas fa-clock"></i><span class="a-text">Check reserved</span></a>
+      </div>
       <div class="menu-item" *ngIf="cookieService.get('userLogged')==='user'">
         <a href="/my-profile"  mat-menu-item class="btn"><i class="fas fa-user-edit"></i><span class="a-text">My profile</span></a>
       </div>

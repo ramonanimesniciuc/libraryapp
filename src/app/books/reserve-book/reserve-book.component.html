@@ -1,4 +1,7 @@
-<div class="book-div">
+<div class="book-div" *ngIf="hasPayments">
+  <h1>You have some payments to make.Check history.</h1>
+</div>
+<div class="book-div" *ngIf="!hasPayments">
 
   <h4 *ngIf="copies.length>0" >Book your favorite book now:</h4>
   <mat-form-field *ngIf="copies.length>0" class="col-12">
@@ -30,5 +33,6 @@
   </mat-form-field>
   <div class="row price " *ngIf="copies.length>0">You will have to pay : {{selectedTime.cost}} RON in order to book this book.</div>
   <div class="row text-sm-center" *ngIf="copies.length>0">(Your card will be debited for this action)</div>
+  <button mat-button class="col-md-12 buttonBook" *ngIf="copies.length>0" (click)="payNow(selectedTime.cost)">Book now</button>
 </div>
-<button mat-button class="col-md-12 buttonBook" *ngIf="copies.length>0" (click)="bookThisBook()">Book now</button>
+

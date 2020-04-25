@@ -15,6 +15,7 @@ export class RentBookComponent implements OnInit {
   private selectedCopy: any;
   private copies: any[];
   private hasNotifications:any;
+  public hasPayments:boolean;
   constructor(private booksService: BooksService,
               @Inject(MAT_DIALOG_DATA) public data: any ,
               private cookieService: CookieService,
@@ -22,10 +23,12 @@ export class RentBookComponent implements OnInit {
               public dialogRef: MatDialogRef<RentBookComponent>, ) { }
 
   ngOnInit() {
+    this.checkIfHasPayment();
     this.copies=[];
     this.selectedCopy = this.data.bookId;
     this.hasNotifications = this.data.hasNotifications;
     this.getCopies();
+
   }
 rentBook() {
     const rent = {
@@ -47,6 +50,14 @@ rentBook() {
     );
 }
 
+checkIfHasPayment(){
+this.booksService.checkIfHasPayment(Number(this.cookieService.get('userDetails'))).subscribe(
+  (result)=>{
+this.hasPayments=result.data.length>0;
+  }
+);
+}
+
   onCopySelected($event, index) {
     this.selectedCopy = $event;
     // document.getElementsByClassName('divCopies')[index].style.backgroundColor="#b3ffff";
@@ -64,7 +75,16 @@ getCopies() {
 }
 
 notifyUser(){
-
+    const notification={
+      UserId:this.cookieService.get('userDetails'),
+      bookId:this.data.bookId
+    }
+this.booksService.addNotification(notification).subscribe(
+  (success)=>{
+    this.notifications.success('Notification added!','',{timeOut:2000});
+    this.dialogRef.close();
+  }
+)
 }
 
 }

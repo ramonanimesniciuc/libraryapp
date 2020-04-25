@@ -60,3 +60,19 @@
   font-weight: bold;
   background: lightgoldenrodyellow;
 }
+.example-card{
+  font-size: 22px;
+  i{
+    padding: 5px;
+    background: white;
+    margin: 5px;
+  }
+  max-width: 500px;
+  max-height: 550px;
+  margin:auto;
+  margin-bottom: 5%;
+  display: block;
+}
+.returnNow{
+  background: red;
+}

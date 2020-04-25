@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BooksService} from '../books.service';
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
   selector: 'app-delete-book',
@@ -8,7 +9,8 @@ import {BooksService} from '../books.service';
 })
 export class DeleteBookComponent implements OnInit {
 
-  constructor(public booksService: BooksService) { }
+  constructor(public booksService: BooksService,
+              private notificationsService: NotificationsService) { }
   public searchValue: string;
   public dataSource: any[] = [];
   public loading: boolean;
@@ -25,7 +27,11 @@ export class DeleteBookComponent implements OnInit {
   }
 
   delete(bookCopyId: number) {
-
+this.booksService.deleteCopy(bookCopyId).subscribe(
+  (success)=>{
+    this.notificationsService.success(success.message,'',{timeOut:2000});
+  }
+)
   }
 
 }

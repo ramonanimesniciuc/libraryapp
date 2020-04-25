@@ -11,6 +11,9 @@ export class LibrarianService {
   createNewAccount(newUser: any) {
 return this.http.post('users', newUser);
   }
+  notifyReturn(rentId:number){
+    return this.http.get('notifyreturn/' + rentId);
+  }
 
   getRents(libraryId: any) {
     return this.http.get('rents/' + libraryId);
@@ -34,5 +37,17 @@ return this.http.post('users', newUser);
 
   getReportOnCurrentStatus(librarianId: number){
     return this.http.get('currentStatus/' + librarianId);
+  }
+
+  getReservedBooksByLibrary(libraryId:any){
+    return this.http.get('reservedBooksByLibrary/' + libraryId);
+  }
+
+  changeReservationStatus(id:any,newRent:any){
+    return this.http.post('changereservationstatus/' + id,newRent);
+  }
+
+  deleteReservation(id:any){
+    return this.http.get('deletereservation/' + id);
   }
 }

@@ -16,7 +16,11 @@ export class RentsUserService {
     return this.http.get('rentedBooksTillToday/' + userId);
   }
 
-  pay(payment:any){
-    return this.http.post('pay',payment);
+  pay(id:any,payment:any){
+    return this.http.post('pay/' + id,payment);
+  }
+
+  payreservation(payment:any){
+    return this.http.post('pay-reservation/',payment);
   }
 }

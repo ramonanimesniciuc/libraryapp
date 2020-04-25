@@ -20,6 +20,7 @@ export class AddBookComponent implements OnInit {
  private publishHouses: any[];
  private libraries: any[];
  private bookCopies: any[];
+ public authorForm:FormGroup;
   private imageSrc: string = '';
   fileData: File = null;
   previewUrl: any = null;
@@ -36,6 +37,9 @@ export class AddBookComponent implements OnInit {
     this.categories = [];
     this.bookCopies = [];
     this.authors = [];
+    this.authorForm = this.formBuilder.group({
+      name:new FormControl('')
+    })
     this.addForm = this.formBuilder.group({
       AuthorId: new FormControl('', Validators.required),
       cover: new FormControl('',Validators.required),
@@ -54,6 +58,17 @@ export class AddBookComponent implements OnInit {
     this.getPublishingHouses();
     this.getLibraries();
     this.getStatuses();
+  }
+
+  addAuthor(){
+this.bookService.addAuthor(this.authorForm.value).subscribe(
+  (success)=>{
+    this.notifications.success('Author :' + this.authorForm.get('name').value + ' added!','',{timeout:2000});
+    setTimeout(()=>{
+      location.reload();
+    },1000);
+  }
+)
   }
 
   addNewBook() {

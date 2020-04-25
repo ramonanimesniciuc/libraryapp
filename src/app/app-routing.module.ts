@@ -16,6 +16,7 @@ import {CheckRentsComponent} from './librarian-dashboard/check-rents/check-rents
 import {DeleteBookComponent} from './books/delete-book/delete-book.component';
 import {ContactComponent} from './user/contact/contact.component';
 import {StatisticsComponent} from './librarian-dashboard/statistics/statistics.component';
+import {ReservedListComponent} from "./librarian-dashboard/reserved-list/reserved-list.component";
 
 
 
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path: 'my-profile', component: MemberComponent, canActivate: [AuthGuard]},
   {path: 'rent-book', component: LendBookComponent, canActivate: [AuthGuard]},
   {path: 'contact', component: ContactComponent, canActivate: [AuthGuard]},
-  {path: 'reports', component: StatisticsComponent, canActivate: [AuthGuard]}
+  {path: 'reports', component: StatisticsComponent, canActivate: [AuthGuard]},
+  {path:'reserved-books',component:ReservedListComponent}
 ];
 
 @NgModule({

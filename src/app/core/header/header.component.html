@@ -1,6 +1,6 @@
 <div class="header">
   <div class="col-md-9">
-    <div class="search ">
+    <div class="search " *ngIf="cookieService.get('userLogged') && router.url==='/books'" >
       <input type="text" [(ngModel)]="searchValue" class="searchTerm" placeholder="What are you looking for?">
       <button type="submit" (click)="search()" class="searchButton">
         <i class="fa fa-search"></i>

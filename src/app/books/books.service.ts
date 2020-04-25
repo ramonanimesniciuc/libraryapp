@@ -90,4 +90,16 @@ filterBookByLibraryAvailable(libraryId: any) {
   searchForDelete(searchValue:string){
     return this.http.get('searchForDelete/' + searchValue);
   }
+
+  checkIfHasPayment(userId:any){
+    return this.http.get('checkpayment/' + userId);
+  }
+
+  addAuthor(author:any){
+    return this.http.post('authors',author);
+  }
+
+  deleteCopy(copyId:any){
+    return this.http.remove('bookcopies/' + copyId);
+  }
 }

@@ -1,4 +1,13 @@
 <h1 class="form-title">ADD BOOK</h1>
+<h3>If you want to add a book that doesn't have an author in our database please add the author first here.</h3>
+<form [formGroup]="authorForm">
+  <div class="authorName">
+    <mat-form-field class="example align-content-center">
+      <input matInput placeholder="Author name" formControlName="name">
+    </mat-form-field>
+  </div>
+  <button type="button" (click)="addAuthor()" class="btn btn-outline-primary">Add author</button>
+</form>
 <form [formGroup]="addForm" class="add-form">
 <!--  {{cookieService.get('userToken')}}-->
 <!--  {{cookieService.get('userLogged')}}-->

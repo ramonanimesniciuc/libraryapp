@@ -14,14 +14,14 @@ export class LoginComponent implements OnInit {
   private password: any;
   private loading: any;
   private loginLibrarian: boolean;
+  public showCreate:boolean;
   constructor(private cookieService: CookieService,
               private authService: AuthService,
               private notification: NotificationsService,
               private router: Router) { }
 
   ngOnInit() {
-    // this.cookieService.delete('userLogged');
-    // this.cookieService.delete('userToken');
+this.cookieService.deleteAll();
   }
   loginUser() {
 //     if (this.username === 'user' && this.password === 'user') {
@@ -52,6 +52,9 @@ export class LoginComponent implements OnInit {
 
   showloginLibrarian() {
     this.loginLibrarian = !this.loginLibrarian;
+  }
+  showCreateUser(){
+    this.router.navigate(['create-user-account']);
   }
   loginAsLibrarian() {
     this.loading=true;
