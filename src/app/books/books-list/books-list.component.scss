@@ -101,6 +101,14 @@ zoom on click
     font-size: 22px;
   }
 }
+.selections{
+width: 600px;
+  display: flex;
+  padding: 10px;
+  i{
+    padding: 2px;
+  }
+}
 .landing {
   margin-top: 50px;
   border-radius: 5%;

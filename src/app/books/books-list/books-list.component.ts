@@ -16,6 +16,7 @@ export class BooksListComponent implements OnInit {
   private loading: boolean;
   public paginationNo:any[];
   public selectedPage:number = 1;
+  public categories: any[];
   constructor(private router: Router,
               private route: ActivatedRoute,
               public bookService: BooksService,
@@ -23,7 +24,6 @@ export class BooksListComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    console.log(this.cookieService.get('userLogged'));
     this.paginationNo=[];
     const book = {
       author: 'string',
@@ -39,6 +39,7 @@ export class BooksListComponent implements OnInit {
     this.getBooksNumber();
     this.getBooks();
     this.getLibraries();
+    this.getCategories();
   }
 
   changeBookFilter($event) {
@@ -46,6 +47,20 @@ export class BooksListComponent implements OnInit {
    this.filterBooksByLibrary($event.value);
   }
 
+  changeBookFilterCategory($event){
+    this.filterBookByCategory($event.value);
+  }
+
+  filterBookByCategory(categoryId:number){
+this.bookService.filterBooksByCategory(categoryId).subscribe(
+  (success)=>{
+    this.bookService.books = success.data;
+    this.paginationNo = [];
+    for(let i=0;i<this.bookService.books.length/6;i++){
+      this.paginationNo.push(i+1);
+    }
+  }
+)}
   goToBookVirew(bookId: any) {
     this.router.navigate(['./' + bookId], {relativeTo: this.route});
   }
@@ -74,6 +89,10 @@ export class BooksListComponent implements OnInit {
     (books) => {
       this.books = books;
       this.bookService.books = books;
+      this.paginationNo = [];
+      for(let i=0;i<this.bookService.books.length/6;i++){
+        this.paginationNo.push(i+1);
+      }
       this.loading = false;
     },
     (error) => {
@@ -87,9 +106,7 @@ export class BooksListComponent implements OnInit {
       (books) => {
        this.books = books;
       this.bookService.books = books;
-      console.log(Math.round(this.bookService.books.length/6));
       this.loading=false;
-       console.log(this.books);
 
       }
     );
@@ -99,7 +116,6 @@ export class BooksListComponent implements OnInit {
 
   goToPag(pagNo:number){
 this.selectedPage = pagNo;
-console.log(document.getElementsByClassName('page-item'));
    for(let i=0;i< document.getElementsByClassName('page-item').length;i++)
    {
      document.getElementsByClassName('page-item')[i].classList.remove('active');
@@ -108,7 +124,17 @@ console.log(document.getElementsByClassName('page-item'));
 this.getBooks();
   }
 
+  getCategories(){
+    this.bookService.getCategories().subscribe(
+      (categories)=>{
+        this.categories = categories;
+
+      }
+    )
+  }
+
   getBooksNumber(){
+    this.paginationNo =[];
     this.bookService.getbooksNumber().subscribe(result=>{
       for(let i=0;i<result.number/6;i++){
         this.paginationNo.push(i+1);

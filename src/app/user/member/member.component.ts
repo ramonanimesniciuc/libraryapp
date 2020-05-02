@@ -28,7 +28,7 @@ export class MemberComponent implements OnInit {
     this.showEdit = false;
     this.userService.updateUser(this.cookieService.get('userDetails')).subscribe(
       (success) => {
-  this.notification.success(success.message);
+  this.notification.success(success.message,'',{timeOut:1700});
   this.showEdit = false;
       },
       (err) => {

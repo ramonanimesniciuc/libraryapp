@@ -55,6 +55,10 @@ export class BooksService {
   filterBooksByLibrary(libraryId: any) {
     return this.http.get('booksByLibrary/' + libraryId);
   }
+
+  filterBooksByCategory(CategoryId: number){
+    return this.http.get('booksbycategory/' + CategoryId);
+  }
 filterBookByLibraryAvailable(libraryId: any) {
     return this.http.get('booksByLibraryAvailable/' + libraryId);
 }

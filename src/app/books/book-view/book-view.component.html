@@ -36,7 +36,6 @@
         <p class="book_attributes col-12" *ngIf="book.PublishingHouse"><span class="caps">P</span>ublished by: {{book.PublishingHouse.name}}</p>
         <p class="book_attributes col-12"><span class="caps">R</span>ating: {{book.rating}}<i class="fas fa-star"></i></p>
         <p class="book_attributes col-12"><span class="caps">I</span>n stock: {{book.stock}}</p>
-        <p class="book_attributes col-12"><span class="caps">C</span>ondition: {{book.condition}}</p>
         <button  mat-button class="mat-button pull-left col-12" (click)="rentBook(bookId)"> <i class="fas fa-bookmark" ></i> Rent book</button>
         <button  mat-button class="mat-button2 pull-right col-12" (click)="bookABook(bookId)"> <i class="fas fa-bookmark" ></i> Book it</button>
       </div>

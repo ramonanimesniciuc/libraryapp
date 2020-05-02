@@ -3,7 +3,8 @@
     <img class="animated landing" src="../../../assets/landing.png">
   </div>
 <div id="large-th">
-  <div class="select-location"><mat-form-field class="select-location">
+  <div class="selections">
+    <mat-form-field class="select-location">
       <mat-label>   <i class="fas fa-map-marker-alt"></i>Choose library location</mat-label>
       <mat-select (selectionChange)="changeBookFilter($event)">
         <mat-option *ngFor="let location of locations" [value]="location.id">
@@ -11,6 +12,16 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <div class="select-category">
+      <mat-form-field class="select-location">
+      <mat-label>  <i class="fas fa-folder-open"></i>Choose category</mat-label>
+      <mat-select (selectionChange)="changeBookFilterCategory($event)">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{category.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
   </div>
 
   <div class="container">
@@ -32,7 +43,7 @@
     </div>
   </div>
 </div>
-  <nav aria-label="Page navigation example" id="pagination">
+  <nav aria-label="Page navigation example" *ngIf="paginationNo.length > 1" id="pagination">
     <ul class="pagination">
 <!--      <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
       <li *ngFor="let item of paginationNo" (click)="goToPag(item)" class="page-item"><a class="page-link">{{item}}</a></li>

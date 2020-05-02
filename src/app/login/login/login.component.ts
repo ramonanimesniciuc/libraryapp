@@ -32,7 +32,7 @@ this.cookieService.deleteAll();
     this.authService.login({username: this.username, password: this.password}).subscribe(
       (user) => {
         if (user.length === 0) {
-          this.notification.error('Username or password wrong');
+          this.notification.error('Username or password wrong','',{timeOut:1700});
           this.loading=false;
         } else {
           this.cookieService.set('userLogged', 'user', 5);
@@ -62,7 +62,7 @@ this.authService.loginLibrarian({username: this.username, password: this.passwor
   (librarian) => {
 
     if (librarian.length === 0) {
-      this.notification.error('Username or password wrong!');
+      this.notification.error('Username or password wrong!','',{timeOut:1500});
       this.loading=false;
     } else {
       this.cookieService.set('userLogged', 'librarian', 5);

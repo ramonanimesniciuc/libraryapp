@@ -812,6 +812,12 @@ app.get('/checkpayment/:id',(req,res,next)=>{
   })
 })
 
+app.get('/booksbycategory/:id',(req,res,next)=>{
+Books.findAll({where:{categoryId: req.params.id}}).then((books)=>{
+  res.status(200).json({data:books})
+})
+})
+
 app.post('/changereservationstatus/:id',(req,res,next)=>{
   ReservedBooks.destroy({where:{id:req.params.id}}).then(()=>{
     RentedBooks.create(req.body).then((success)=>{
