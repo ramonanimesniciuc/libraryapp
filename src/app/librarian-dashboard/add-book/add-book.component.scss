@@ -215,3 +215,20 @@ button:disabled{
 .date { grid-area: date; }
 
 .description { grid-area: description; }
+@media screen and (min-width: 2400px) and (max-width: 3500px) {
+  .copy-btn{
+    width: 380px!important;
+    font-size: 30px!important;
+  }
+  .btn{
+    font-size: 30px;
+    width: 380px;
+  }
+  .image-upload-container{
+    width: 430px;
+    font-size: 26px;
+  }
+  .img-upload{
+    width: 95%;
+  }
+}

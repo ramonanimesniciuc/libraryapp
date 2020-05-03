@@ -714,7 +714,9 @@ RentedBooks.findAll()
     rentedbooks.forEach((rentedBook)=>{
       BookCopies.findOne({where:{id:rentedBook.bookCopyId}})
         .then((bookCopy)=>{
-          mostRentedLibraries[bookCopy.LibraryId]++;
+          if(bookCopy){
+            mostRentedLibraries[bookCopy.LibraryId]++;
+          }
         })
     })
   })

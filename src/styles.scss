@@ -145,3 +145,143 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     width: 70%!important;
   }
 }
+@media screen and (min-width: 2400px) and (max-width: 3500px) {
+  h1{
+    font-size: 30px!important;
+  }
+  p{
+    font-size: 22px;
+  }
+  .mat-form-field-label-wrapper{
+    min-width: 400px!important;
+  }
+  .mat-form-field-suffix{
+    width: 71% !important;
+  }
+  .animated{
+    background: url("./assets/landing-lg.png") !important;
+    width: 100%;
+    height: 945px;
+  }
+  .Content{
+    min-height: 1200px!important;
+  }
+  button{
+    .copy-btn{
+      width: 300px!important;
+      font-size: 30px;
+    }
+  }
+  app-book-view{
+    .view-book{
+      margin-left: 15% !important;
+    }
+    button{
+      font-size: 22px!important;
+    }
+  }
+  .book-card__cover {
+    position: relative;
+    width: 670px!important;
+    height: 990px!important;
+    margin: 0 auto 8px auto!important;
+    perspective: 1000px!important;
+    margin-top: 25px!important;
+  }
+  .book-card__img{
+    width: 180% !important;
+  }
+  .details-book{
+    font-size: 20px;
+  }
+  .container{
+    max-width: 1800px!important;
+  }
+  .mat-menu-item{width: 400px}
+  .example-sidenav{
+    a{
+      margin: auto;
+      display: block;
+      font-size: 25px!important;
+      width: 270px;
+      i{
+        font-size: 35px;
+      }
+    }
+
+  }
+
+  .description{
+    font-size: 11px!important;
+  }
+
+  .wrap-login100{
+    width: 750px!important;
+      margin-bottom: 30% !important;
+    .login100-form-btn{
+      display: block;
+      margin: auto;
+    }
+  }
+
+   .btn{
+     width: 400px!important;
+     font-weight: bold;
+   }
+
+  .mat-form-field{
+    width: 340px!important;
+    font-size: 30px;
+  }
+  .mat-form-field-infix{
+    font-size: 22px!important;
+    width: 400px!important;
+    padding: 10px;
+  }
+  app-rent-book{
+    .mat-form-field-infix{
+      width: 800px!important;
+      font-size: 22px!important;
+    }
+  }
+
+  .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+    font-weight: 900;
+    font-size: 30px;
+  }
+  .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon{
+    width: 19em!important;
+
+  }
+  .copy-btn,.add-book-copy,.add-copies{
+    font-size: 30px!important;
+    width: 280px!important;
+  }
+  button{
+    width: 300px!important;
+  }
+
+  .example-sidenav{
+    width: 15%!important;
+    img{
+      width: 100%!important;
+    }
+  }
+
+  .search{
+    width: 80%!important;
+  }
+
+  app-footer{
+    font-size: 22px!important;
+    p{
+      font-size: 22px!important;
+      letter-spacing: 2px!important;
+      padding: 5px!important;
+    }
+  }
+
+  .wrap-login100-form-btn{
+    width: 70%!important;
+  }
+}

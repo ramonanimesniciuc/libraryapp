@@ -13,7 +13,26 @@ export class StatisticsComponent implements OnInit {
               private cookieService: CookieService) { }
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          fontSize: 45
+        }
+      }],
+      xAxes:[{
+        ticks:{
+          fontSize:45
+        }
+      }]
+    },
+    legend: {
+      display: true,
+      labels: {
+        fontColor: 'rgb(255, 99, 132)',
+        fontSize:45
+      }
+    }
   };
   public barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   public barChartType = 'bar';
@@ -24,12 +43,28 @@ export class StatisticsComponent implements OnInit {
   ];
 
   public doughnutChartOptions = {
-    responsive: true
+    responsive: true,
+    legend: {
+      display: true,
+      labels: {
+        fontColor: 'rgb(255, 99, 132)',
+        fontSize:45
+      }
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          fontSize: 70
+        }
+      }]
+    }
   };
 
+
   public doughnutChartLabels = ['Rented', 'Booked', 'Availables'];
-  public doughnutChartData = [];
-  public doughnutChartType = 'pie';
+  public doughnutChartData = [1,1,1];
+  public doughnutChartType = 'doughnut';
+
   ngOnInit() {
     this.getReportOnRentedBooked();
     this.getLibrariesNAMES();
@@ -55,7 +90,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   getCurrentStatus() {
-this.librarianService.getReportOnCurrentStatus(Number(this.cookieService.get('userDetails'))).subscribe(
+this.librarianService.getReportOnCurrentStatus(Number(this.cookieService.get('userDetails')) + 1).subscribe(
   (results) => {
      this.doughnutChartData = results.results;
   }
