@@ -33,7 +33,7 @@
     <button *ngIf="showRent && bookToBeChanged===reservedBook.id" class="btn btn-outline-secondary" (click)="change(reservedBook)">Change status</button>
   </mat-card-content>
 </mat-card>
-<mat-card class="example-card" *ngIf="reservedBooks.length===0">
+<mat-card class="example-card" *ngIf="reservedBooks && reservedBooks.length===0">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>No reserved books today.</mat-card-title>

@@ -32,7 +32,7 @@ export class ReservedListComponent implements OnInit {
   }
 
   deleteReservation(reservationId:any){
-this.librarianService.deleteReservation(reservationId).subscribe(
+   this.librarianService.deleteReservation(reservationId).subscribe(
   (success)=>{
     this.notificationsService.success('Reservation deleted!','',{timeOut:2000});
     this.getReservedBooks();
@@ -46,12 +46,13 @@ this.librarianService.deleteReservation(reservationId).subscribe(
   }
 
   change(reservation:any){
+    console.log(reservation);
     this.newRent={
       startDate:new Date(),
       endDate: this.endDate,
       LibrarianId:1,
       bookCopyId:reservation.bookCopyId,
-      UserId:this.cookieService.get('userDetails')
+      UserId:reservation.UserId
     }
     this.librarianService.changeReservationStatus(reservation.id,this.newRent).subscribe(
       (success)=>{

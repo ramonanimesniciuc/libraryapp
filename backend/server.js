@@ -46,8 +46,8 @@ const transport = {
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "c95605d23b0366",
-    pass: "3e1390801ca6da"
+    user: "70fe57ba37704d",
+    pass: "4f8bdd0dbbc45a"
   }
 };
 
@@ -496,9 +496,20 @@ app.post('/authors',(req,res,next)=>{
 })
 
 app.delete('/bookcopies/:id',(req,res,next)=>{
-  BookCopies.destroy({where:{id:req.params.id}}).then((success)=>{
-    res.status(200).json({message:'Book copy deleted!'})
+  BookCopies.findOne({where:{id:req.params.id}}).then((copy)=>{
+    const book=copy.bookId;
+    BookCopies.destroy({where:{id:req.params.id}}).then((success)=>{
+    Books.findOne({where:{id:book}}).then((book)=>{
+      const currentStock = book.stock-1;
+      console.log(currentStock);
+      console.log(book);
+      book.update({stock:currentStock}).then((success)=>{
+        res.status(200).json({message:'Book copy deleted!'})
+      })
+    })
+    })
   })
+
 })
 
 app.get('/categories',(req,res,next)=>{

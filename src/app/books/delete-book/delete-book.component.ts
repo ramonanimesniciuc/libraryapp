@@ -30,6 +30,7 @@ export class DeleteBookComponent implements OnInit {
 this.booksService.deleteCopy(bookCopyId).subscribe(
   (success)=>{
     this.notificationsService.success(success.message,'',{timeOut:2000});
+    this.dataSource = [];
   }
 )
   }
